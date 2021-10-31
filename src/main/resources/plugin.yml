@@ -12,4 +12,6 @@ commands:
   Head:
     description: Swap item to your head
     usage: /<command>
-
+  armorswapreload:
+    description: reload Armorswap plugin
+    usage: /<command>

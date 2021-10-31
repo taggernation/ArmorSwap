@@ -4,6 +4,7 @@ import com.toonystank.armorswap.ArmorSwap;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -30,21 +31,29 @@ public class onRightClick implements Listener {
                         ItemStack Item = player.getInventory().getItemInMainHand();
                         if (Item.getType().toString().toLowerCase().contains("helmet")) {
                             ItemStack returnItem = player.getInventory().getHelmet();
+                            assert returnItem != null;
+                            if (returnItem.containsEnchantment(Enchantment.BINDING_CURSE)) return;
                             player.getInventory().setItemInMainHand(returnItem);
                             player.getInventory().setHelmet(Item);
                             player.playSound(player.getLocation(), Sound.ITEM_ARMOR_EQUIP_TURTLE, 1.0F, 1.0F);
                         } else if (Item.getType().toString().toLowerCase().contains("chestplate")) {
                             ItemStack returnItem = player.getInventory().getChestplate();
+                            assert returnItem != null;
+                            if (returnItem.containsEnchantment(Enchantment.BINDING_CURSE)) return;
                             player.getInventory().setItemInMainHand(returnItem);
                             player.getInventory().setChestplate(Item);
                             player.playSound(player.getLocation(), Sound.ITEM_ARMOR_EQUIP_TURTLE, 1.0F, 1.0F);
                         } else if (Item.getType().toString().toLowerCase().contains("boots")) {
                             ItemStack returnItem = player.getInventory().getBoots();
+                            assert returnItem != null;
+                            if (returnItem.containsEnchantment(Enchantment.BINDING_CURSE)) return;
                             player.getInventory().setItemInMainHand(returnItem);
                             player.getInventory().setBoots(Item);
                             player.playSound(player.getLocation(), Sound.ITEM_ARMOR_EQUIP_TURTLE, 1.0F, 1.0F);
                         } else if (Item.getType().toString().toLowerCase().contains("leggings")) {
                             ItemStack returnItem = player.getInventory().getLeggings();
+                            assert returnItem != null;
+                            if (returnItem.containsEnchantment(Enchantment.BINDING_CURSE)) return;
                             player.getInventory().setItemInMainHand(returnItem);
                             player.getInventory().setLeggings(Item);
                             player.playSound(player.getLocation(), Sound.ITEM_ARMOR_EQUIP_TURTLE, 1.0F, 1.0F);
