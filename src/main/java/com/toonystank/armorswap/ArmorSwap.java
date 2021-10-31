@@ -3,7 +3,6 @@ package com.toonystank.armorswap;
 import com.toonystank.armorswap.Commands.EnableSwap;
 import com.toonystank.armorswap.Events.onRightClick;
 import org.bukkit.ChatColor;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
