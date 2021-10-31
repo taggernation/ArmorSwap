@@ -50,19 +50,19 @@ public class onArmorStandRightClick implements Listener {
                     ItemStack playerOffHand = Objects.requireNonNull(player.getEquipment().getItemInOffHand());
 
                     // armor stand set armor
-                    if (HasEnchant(playerBoots)) {
+                    if (CanMove(playerBoots)) {
                         stand.getEquipment().setBoots(playerBoots);
                         player.getEquipment().setBoots(standBoots);
                     }
-                    if (HasEnchant(playerLeggings)) {
+                    if (CanMove(playerLeggings)) {
                         stand.getEquipment().setLeggings(playerLeggings);
                         player.getEquipment().setLeggings(standLeggings);
                     }
-                    if (HasEnchant(playerChestplate)) {
+                    if (CanMove(playerChestplate)) {
                         stand.getEquipment().setChestplate(playerChestplate);
                         player.getEquipment().setChestplate(standChestplate);
                     }
-                    if (HasEnchant(playerHelmet)) {
+                    if (CanMove(playerHelmet)) {
                         stand.getEquipment().setHelmet(playerHelmet);
                         player.getEquipment().setHelmet(standHelmet);
                     }
@@ -80,7 +80,7 @@ public class onArmorStandRightClick implements Listener {
         }
     }
 
-    boolean HasEnchant(ItemStack item){
+    boolean CanMove(ItemStack item){
         if(item == null) return true;
         if(item.getType().equals(Material.AIR)) return true;
         return !item.containsEnchantment(Enchantment.BINDING_CURSE);
