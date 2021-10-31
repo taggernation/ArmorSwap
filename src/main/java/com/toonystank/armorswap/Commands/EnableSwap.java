@@ -20,17 +20,17 @@ public class EnableSwap implements CommandExecutor {
         // enable command
         if (sender instanceof Player p) {
             PersistentDataContainer data = p.getPersistentDataContainer();
-            if (!data.has(new NamespacedKey(ArmorSwap.getPlugin(), "Enabled"), PersistentDataType.INTEGER)) {
-                data.set(new NamespacedKey(ArmorSwap.getPlugin(), "Enabled"), PersistentDataType.INTEGER, 0);
+            if (!data.has(new NamespacedKey(ArmorSwap.getPlugin(), "ArmorSwapEnabled"), PersistentDataType.INTEGER)) {
+                data.set(new NamespacedKey(ArmorSwap.getPlugin(), "ArmorSwapEnabled"), PersistentDataType.INTEGER, 0);
             }else {
                 try {
-                    int value = Objects.requireNonNull(data.get(new NamespacedKey(ArmorSwap.getPlugin(), "Enabled"), PersistentDataType.INTEGER));
+                    int value = Objects.requireNonNull(data.get(new NamespacedKey(ArmorSwap.getPlugin(), "ArmorSwapEnabled"), PersistentDataType.INTEGER));
                     if (value == 1) {
                         p.sendMessage(ChatColor.AQUA + "Armor swap is Disabled");
-                        data.set(new NamespacedKey(ArmorSwap.getPlugin(), "Enabled"), PersistentDataType.INTEGER, 0);
+                        data.set(new NamespacedKey(ArmorSwap.getPlugin(), "ArmorSwapEnabled"), PersistentDataType.INTEGER, 0);
                     }else {
                         p.sendMessage(ChatColor.AQUA + "Armor swap is enabled");
-                        data.set(new NamespacedKey(ArmorSwap.getPlugin(), "Enabled"), PersistentDataType.INTEGER, 1);
+                        data.set(new NamespacedKey(ArmorSwap.getPlugin(), "ArmorSwapEnabled"), PersistentDataType.INTEGER, 1);
                     }
                 }catch (Exception value){
                     System.out.println("error message by plugin" + value.getMessage());

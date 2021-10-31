@@ -17,6 +17,6 @@ public class onJoin implements Listener {
         Player p = event.getPlayer();
         PersistentDataContainer data = p.getPersistentDataContainer();
         p.sendMessage(ChatColor.AQUA + "Armor swap is enabled");
-        data.set(new NamespacedKey(ArmorSwap.getPlugin(), "Enabled"), PersistentDataType.INTEGER, 1);
+        data.set(new NamespacedKey(ArmorSwap.getPlugin(), "ArmorSwapEnabled"), PersistentDataType.INTEGER, 1);
     }
 }

@@ -21,7 +21,7 @@ public class onRightClick implements Listener {
     public void onRightClickEvent(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         PersistentDataContainer data = player.getPersistentDataContainer();
-        int value = Objects.requireNonNull(data.get(new NamespacedKey(ArmorSwap.getPlugin(), "Enabled"), PersistentDataType.INTEGER));
+        int value = Objects.requireNonNull(data.get(new NamespacedKey(ArmorSwap.getPlugin(), "ArmorSwapEnabled"), PersistentDataType.INTEGER));
         if (value == 1) {
             if (Objects.equals(event.getItem(), player.getInventory().getItemInMainHand())) {
                 if (event.getAction() == Action.RIGHT_CLICK_AIR) {
