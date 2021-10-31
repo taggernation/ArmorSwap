@@ -1,4 +1,44 @@
 package com.toonystank.armorswap.Commands;
 
-public class EnableSwap {
+import com.toonystank.armorswap.ArmorSwap;
+import org.bukkit.ChatColor;
+import org.bukkit.NamespacedKey;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
+
+import java.util.Objects;
+
+public class EnableSwap implements CommandExecutor {
+
+
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        // enable command
+        if (sender instanceof Player p) {
+            PersistentDataContainer data = p.getPersistentDataContainer();
+            if (!data.has(new NamespacedKey(ArmorSwap.getPlugin(), "Enabled"), PersistentDataType.INTEGER)) {
+                data.set(new NamespacedKey(ArmorSwap.getPlugin(), "Enabled"), PersistentDataType.INTEGER, 0);
+            }else {
+                try {
+                    int value = Objects.requireNonNull(data.get(new NamespacedKey(ArmorSwap.getPlugin(), "Enabled"), PersistentDataType.INTEGER));
+                    if (value == 1) {
+                        p.sendMessage(ChatColor.AQUA + "Armor swap is Disabled");
+                        data.set(new NamespacedKey(ArmorSwap.getPlugin(), "Enabled"), PersistentDataType.INTEGER, 0);
+                    }else {
+                        p.sendMessage(ChatColor.AQUA + "Armor swap is enabled");
+                        data.set(new NamespacedKey(ArmorSwap.getPlugin(), "Enabled"), PersistentDataType.INTEGER, 1);
+                    }
+                }catch (Exception value){
+                    System.out.println(value.getMessage());
+                }
+
+            }
+
+        }
+        return true;
+    }
 }

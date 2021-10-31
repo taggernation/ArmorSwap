@@ -5,3 +5,8 @@ api-version: 1.17
 authors: [ Edward ]
 description: Simple Armorswap plugin. Swap armor by right clicking (This is a test project)
 website: https://taggernation.com
+commands:
+  Armor:
+    description: Enable or disable armor swapping
+    usage: /<command>
+
