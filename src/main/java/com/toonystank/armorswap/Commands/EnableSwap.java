@@ -33,7 +33,7 @@ public class EnableSwap implements CommandExecutor {
                         data.set(new NamespacedKey(ArmorSwap.getPlugin(), "Enabled"), PersistentDataType.INTEGER, 1);
                     }
                 }catch (Exception value){
-                    System.out.println(value.getMessage());
+                    System.out.println("error message by plugin" + value.getMessage());
                 }
 
             }

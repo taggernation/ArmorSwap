@@ -1,6 +1,7 @@
 package com.toonystank.armorswap;
 
 import com.toonystank.armorswap.Commands.EnableSwap;
+import com.toonystank.armorswap.Events.onJoin;
 import com.toonystank.armorswap.Events.onRightClick;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -24,6 +25,7 @@ public final class ArmorSwap extends JavaPlugin {
         setPlugin(this);
         System.out.println(ChatColor.AQUA + "Hello," + ChatColor.UNDERLINE + " This is the first plugin test by Edward");
         getServer().getPluginManager().registerEvents(new onRightClick(), this);
+        getServer().getPluginManager().registerEvents(new onJoin(), this);
         Objects.requireNonNull(getCommand("Armor")).setExecutor(new EnableSwap());
     }
 }
