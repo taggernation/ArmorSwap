@@ -16,7 +16,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 public class onArmorStandRightClick implements Listener {
@@ -51,23 +50,19 @@ public class onArmorStandRightClick implements Listener {
                     ItemStack playerOffHand = Objects.requireNonNull(player.getEquipment().getItemInOffHand());
 
                     // armor stand set armor
-                    assert playerBoots  != null;
-                    assert playerLeggings != null;
-                    assert playerChestplate != null;
-                    assert playerHelmet != null;
-                    if (!HasEnchant(playerBoots, Enchantment.BINDING_CURSE)) {
+                    if (HasEnchant(playerBoots)) {
                         stand.getEquipment().setBoots(playerBoots);
                         player.getEquipment().setBoots(standBoots);
                     }
-                    if (!HasEnchant(standLeggings, Enchantment.BINDING_CURSE)) {
+                    if (HasEnchant(playerLeggings)) {
                         stand.getEquipment().setLeggings(playerLeggings);
                         player.getEquipment().setLeggings(standLeggings);
                     }
-                    if (!HasEnchant(standChestplate, Enchantment.BINDING_CURSE)) {
+                    if (HasEnchant(playerChestplate)) {
                         stand.getEquipment().setChestplate(playerChestplate);
                         player.getEquipment().setChestplate(standChestplate);
                     }
-                    if (!HasEnchant(playerHelmet, Enchantment.BINDING_CURSE)) {
+                    if (HasEnchant(playerHelmet)) {
                         stand.getEquipment().setHelmet(playerHelmet);
                         player.getEquipment().setHelmet(standHelmet);
                     }
@@ -85,10 +80,10 @@ public class onArmorStandRightClick implements Listener {
         }
     }
 
-    boolean HasEnchant(ItemStack item, Enchantment enchantment){
-        if(item.equals(null))return false;
-        if(item.getType().equals(Material.AIR)) return false;
-        return item.containsEnchantment(enchantment);
+    boolean HasEnchant(ItemStack item){
+        if(item == null) return true;
+        if(item.getType().equals(Material.AIR)) return true;
+        return !item.containsEnchantment(Enchantment.BINDING_CURSE);
     }
 }
 
