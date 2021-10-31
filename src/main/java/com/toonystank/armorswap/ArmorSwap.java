@@ -1,6 +1,7 @@
 package com.toonystank.armorswap;
 
 import com.toonystank.armorswap.Commands.EnableSwap;
+import com.toonystank.armorswap.Commands.head;
 import com.toonystank.armorswap.Events.onJoin;
 import com.toonystank.armorswap.Events.onRightClick;
 import com.toonystank.armorswap.Events.onShiftRightClick;
@@ -29,5 +30,6 @@ public final class ArmorSwap extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new onJoin(), this);
         getServer().getPluginManager().registerEvents(new onShiftRightClick(), this);
         Objects.requireNonNull(getCommand("Armor")).setExecutor(new EnableSwap());
+        Objects.requireNonNull(getCommand("Head")).setExecutor(new head());
     }
 }

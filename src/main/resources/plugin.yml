@@ -9,4 +9,7 @@ commands:
   Armor:
     description: Enable or disable armor swapping
     usage: /<command>
+  Head:
+    description: Swap item to your head
+    usage: /<command>
 
