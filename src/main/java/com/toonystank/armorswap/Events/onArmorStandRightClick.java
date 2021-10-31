@@ -3,6 +3,7 @@ package com.toonystank.armorswap.Events;
 import com.toonystank.armorswap.ArmorSwap;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -14,6 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public class onArmorStandRightClick implements Listener {
@@ -39,7 +41,6 @@ public class onArmorStandRightClick implements Listener {
                     ItemStack standHelmet = Objects.requireNonNull(stand.getEquipment()).getHelmet();
                     ItemStack standMainHand = Objects.requireNonNull(stand.getEquipment().getItemInMainHand());
                     ItemStack standOffHand = Objects.requireNonNull(stand.getEquipment().getItemInOffHand());
-
                     // player
                     ItemStack playerBoots = Objects.requireNonNull(player.getEquipment()).getBoots();
                     ItemStack playerLeggings = Objects.requireNonNull(player.getEquipment()).getLeggings();
@@ -49,23 +50,34 @@ public class onArmorStandRightClick implements Listener {
                     ItemStack playerOffHand = Objects.requireNonNull(player.getEquipment().getItemInOffHand());
 
                     // armor stand set armor
-                    stand.getEquipment().setBoots(playerBoots);
-                    stand.getEquipment().setLeggings(playerLeggings);
-                    stand.getEquipment().setChestplate(playerChestplate);
-                    stand.getEquipment().setHelmet(playerHelmet);
+                    assert playerBoots  != null;
+                    assert playerLeggings != null;
+                    assert playerChestplate != null;
+                    assert playerHelmet != null;
+                    if (!playerBoots.containsEnchantment(Enchantment.BINDING_CURSE)) {
+                        stand.getEquipment().setBoots(playerBoots);
+                        player.getEquipment().setBoots(standBoots);
+                    }
+                    if (!playerLeggings.containsEnchantment(Enchantment.BINDING_CURSE)) {
+                        stand.getEquipment().setLeggings(playerLeggings);
+                        player.getEquipment().setLeggings(standLeggings);
+                    }
+                    if (!playerChestplate.containsEnchantment(Enchantment.BINDING_CURSE)) {
+                        stand.getEquipment().setChestplate(playerChestplate);
+                        player.getEquipment().setChestplate(standChestplate);
+
+                    }
+                    if (!playerHelmet.containsEnchantment(Enchantment.BINDING_CURSE)) {
+                        stand.getEquipment().setHelmet(playerHelmet);
+                        player.getEquipment().setHelmet(standHelmet);
+
+                    }
                     if (stand.hasArms()) {
                         stand.getEquipment().setItemInMainHand(playerMainHand);
                         stand.getEquipment().setItemInOffHand(playerOffHand);
-                    }
-
-                    // player set armor
-                    player.getEquipment().setBoots(standBoots);
-                    player.getEquipment().setLeggings(standLeggings);
-                    player.getEquipment().setChestplate(standChestplate);
-                    player.getEquipment().setHelmet(standHelmet);
-                    if (stand.hasArms()) {
                         player.getEquipment().setItemInMainHand(standMainHand);
                         player.getEquipment().setItemInOffHand(standOffHand);
+
                     }
 
                     player.playSound(player.getLocation(), Sound.ITEM_ARMOR_EQUIP_TURTLE, 1.0F, 1.0F);
