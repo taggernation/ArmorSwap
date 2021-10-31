@@ -1,6 +1,7 @@
 package com.toonystank.armorswap.Events;
 
 import com.toonystank.armorswap.ArmorSwap;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
@@ -54,30 +55,27 @@ public class onArmorStandRightClick implements Listener {
                     assert playerLeggings != null;
                     assert playerChestplate != null;
                     assert playerHelmet != null;
-                    if (!playerBoots.containsEnchantment(Enchantment.BINDING_CURSE)) {
+                    if (!HasEnchant(playerBoots, Enchantment.BINDING_CURSE)) {
                         stand.getEquipment().setBoots(playerBoots);
                         player.getEquipment().setBoots(standBoots);
                     }
-                    if (!playerLeggings.containsEnchantment(Enchantment.BINDING_CURSE)) {
+                    if (!HasEnchant(standLeggings, Enchantment.BINDING_CURSE)) {
                         stand.getEquipment().setLeggings(playerLeggings);
                         player.getEquipment().setLeggings(standLeggings);
                     }
-                    if (!playerChestplate.containsEnchantment(Enchantment.BINDING_CURSE)) {
+                    if (!HasEnchant(standChestplate, Enchantment.BINDING_CURSE)) {
                         stand.getEquipment().setChestplate(playerChestplate);
                         player.getEquipment().setChestplate(standChestplate);
-
                     }
-                    if (!playerHelmet.containsEnchantment(Enchantment.BINDING_CURSE)) {
+                    if (!HasEnchant(playerHelmet, Enchantment.BINDING_CURSE)) {
                         stand.getEquipment().setHelmet(playerHelmet);
                         player.getEquipment().setHelmet(standHelmet);
-
                     }
                     if (stand.hasArms()) {
                         stand.getEquipment().setItemInMainHand(playerMainHand);
                         stand.getEquipment().setItemInOffHand(playerOffHand);
                         player.getEquipment().setItemInMainHand(standMainHand);
                         player.getEquipment().setItemInOffHand(standOffHand);
-
                     }
 
                     player.playSound(player.getLocation(), Sound.ITEM_ARMOR_EQUIP_TURTLE, 1.0F, 1.0F);
@@ -85,6 +83,12 @@ public class onArmorStandRightClick implements Listener {
                 }
             }
         }
+    }
+
+    boolean HasEnchant(ItemStack item, Enchantment enchantment){
+        if(item.equals(null))return false;
+        if(item.getType().equals(Material.AIR)) return false;
+        return item.containsEnchantment(enchantment);
     }
 }
 

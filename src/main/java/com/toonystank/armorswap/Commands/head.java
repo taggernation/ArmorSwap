@@ -13,7 +13,8 @@ public class head implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if (sender instanceof Player player) {
+        if (sender instanceof Player) {
+            Player player = ((Player) sender).getPlayer();
             if (player.hasPermission("Armorswap.command.head")) {
                 ItemStack itemForHead = player.getInventory().getItemInMainHand();
                 ItemStack itemForHand = Objects.requireNonNull(player.getEquipment()).getHelmet();
