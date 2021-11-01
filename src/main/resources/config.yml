@@ -4,3 +4,5 @@ Armor_stand_swap: true
 Main_hand_swap: true
 # Enable/Disable swapping item to item frames
 Item_frame_swap: true
+#sound to play on swap
+Sound: ITEM_ARMOR_EQUIP_TURTLE

@@ -22,6 +22,7 @@ public class onArmorStandRightClick implements Listener {
 
     @EventHandler
     public void onArmorStandRightClickEvent(PlayerInteractAtEntityEvent event) {
+        String sound = Objects.requireNonNull(ArmorSwap.getPlugin().getConfig().getString("Sound"));
         boolean isEnabled = ArmorSwap.getPlugin().getConfig().getBoolean("Armor_stand_swap");
         if (isEnabled){
             Player player = event.getPlayer();
@@ -73,7 +74,7 @@ public class onArmorStandRightClick implements Listener {
                         player.getEquipment().setItemInOffHand(standOffHand);
                     }
 
-                    player.playSound(player.getLocation(), Sound.ITEM_ARMOR_EQUIP_TURTLE, 1.0F, 1.0F);
+                    player.playSound(player.getLocation(), Sound.valueOf(sound), 1.0F, 1.0F);
 
                 }
             }

@@ -21,6 +21,7 @@ public class onRightClick implements Listener {
     @EventHandler
     public void onRightClickEvent(PlayerInteractEvent event) {
         boolean isEnabled = ArmorSwap.getPlugin().getConfig().getBoolean("Main_hand_swap");
+        String sound = Objects.requireNonNull(ArmorSwap.getPlugin().getConfig().getString("Sound"));
         if (isEnabled) {
             Player player = event.getPlayer();
             PersistentDataContainer data = player.getPersistentDataContainer();
@@ -29,35 +30,40 @@ public class onRightClick implements Listener {
                 if (Objects.equals(event.getItem(), player.getInventory().getItemInMainHand())) {
                     if (event.getAction() == Action.RIGHT_CLICK_AIR) {
                         ItemStack Item = player.getInventory().getItemInMainHand();
+
                         if (Item.getType().toString().toLowerCase().contains("helmet")) {
-                            ItemStack returnItem = player.getInventory().getHelmet();
-                            assert returnItem != null;
+
+                            ItemStack returnItem = Objects.requireNonNull(player.getInventory().getHelmet());
                             if (returnItem.containsEnchantment(Enchantment.BINDING_CURSE)) return;
                             player.getInventory().setItemInMainHand(returnItem);
                             player.getInventory().setHelmet(Item);
-                            player.playSound(player.getLocation(), Sound.ITEM_ARMOR_EQUIP_TURTLE, 1.0F, 1.0F);
-                        } else if (Item.getType().toString().toLowerCase().contains("chestplate")) {
-                            ItemStack returnItem = player.getInventory().getChestplate();
-                            assert returnItem != null;
+                            player.playSound(player.getLocation(), Sound.valueOf(sound), 1.0F, 1.0F);
+                        }
+                        else if (Item.getType().toString().toLowerCase().contains("chestplate")) {
+
+                            ItemStack returnItem = Objects.requireNonNull(player.getInventory().getChestplate());
                             if (returnItem.containsEnchantment(Enchantment.BINDING_CURSE)) return;
                             player.getInventory().setItemInMainHand(returnItem);
                             player.getInventory().setChestplate(Item);
-                            player.playSound(player.getLocation(), Sound.ITEM_ARMOR_EQUIP_TURTLE, 1.0F, 1.0F);
-                        } else if (Item.getType().toString().toLowerCase().contains("boots")) {
-                            ItemStack returnItem = player.getInventory().getBoots();
-                            assert returnItem != null;
+                            player.playSound(player.getLocation(), Sound.valueOf(sound), 1.0F, 1.0F);
+                        }
+                        else if (Item.getType().toString().toLowerCase().contains("boots")) {
+
+                            ItemStack returnItem = Objects.requireNonNull(player.getInventory().getBoots());
                             if (returnItem.containsEnchantment(Enchantment.BINDING_CURSE)) return;
                             player.getInventory().setItemInMainHand(returnItem);
                             player.getInventory().setBoots(Item);
-                            player.playSound(player.getLocation(), Sound.ITEM_ARMOR_EQUIP_TURTLE, 1.0F, 1.0F);
-                        } else if (Item.getType().toString().toLowerCase().contains("leggings")) {
-                            ItemStack returnItem = player.getInventory().getLeggings();
-                            assert returnItem != null;
+                            player.playSound(player.getLocation(), Sound.valueOf(sound), 1.0F, 1.0F);
+                        }
+                        else if (Item.getType().toString().toLowerCase().contains("leggings")) {
+
+                            ItemStack returnItem = Objects.requireNonNull(player.getInventory().getLeggings());
                             if (returnItem.containsEnchantment(Enchantment.BINDING_CURSE)) return;
                             player.getInventory().setItemInMainHand(returnItem);
                             player.getInventory().setLeggings(Item);
-                            player.playSound(player.getLocation(), Sound.ITEM_ARMOR_EQUIP_TURTLE, 1.0F, 1.0F);
-                        } else {
+                            player.playSound(player.getLocation(), Sound.valueOf(sound), 1.0F, 1.0F);
+                        }
+                        else {
                             player.sendMessage(ChatColor.AQUA + "ItemInHand " + Item);
                         }
                     }
