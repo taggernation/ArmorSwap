@@ -25,19 +25,25 @@ public final class ArmorSwap extends JavaPlugin {
     @Override
     public void onEnable() {
         setPlugin(this);
-        getLogger().info(ChatColor.AQUA + "Hello," + ChatColor.UNDERLINE + " This is the first plugin test by Edward");
         // Events
-        getServer().getPluginManager().registerEvents(new onRightClick(), this);
-        getServer().getPluginManager().registerEvents(new onJoin(), this);
-        getServer().getPluginManager().registerEvents(new onArmorStandRightClick(), this);
-        getServer().getPluginManager().registerEvents(new onItemFrameRightClick(), this);
+        try {
+            getServer().getPluginManager().registerEvents(new onRightClick(), this);
+            getServer().getPluginManager().registerEvents(new onJoin(), this);
+            getServer().getPluginManager().registerEvents(new onArmorStandRightClick(), this);
+            getServer().getPluginManager().registerEvents(new onItemFrameRightClick(), this);
 
-        // Commands
-        Objects.requireNonNull(getCommand("Armorswap")).setExecutor(new EnableSwap());
+            // Commands
+            Objects.requireNonNull(getCommand("Armorswap")).setExecutor(new EnableSwap());
 
-        // Config
-        getConfig().options().copyDefaults();
-        saveDefaultConfig();
+            // Config
+            getConfig().options().copyDefaults();
+            saveDefaultConfig();
+            getLogger().info(ChatColor.AQUA + "Armorswap" + ChatColor.UNDERLINE + " Successfully loaded.");
+        }catch (Exception e) {
+            getLogger().info(ChatColor.RED + "Armorswap" + ChatColor.UNDERLINE + " Failed to load.");
+        }
+
+
     }
 
 }
