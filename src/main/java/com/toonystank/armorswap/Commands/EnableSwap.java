@@ -27,7 +27,7 @@ public class EnableSwap implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("Reload")) {
                     if (sender.hasPermission("Armorswap.command.reload")) {
                         ArmorSwap.getPlugin().reloadConfig();
-                        sender.sendMessage(ChatColor.AQUA + "Armorswap is reloaded");
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix) + "" + ChatColor.AQUA + " ArmorSwap is reloaded");
                     }
                     else {
                         sender.sendMessage(ChatColor.RED + "You don't have permission to use this command!");
@@ -42,11 +42,11 @@ public class EnableSwap implements CommandExecutor {
                         player.playSound(player.getLocation(), Sound.valueOf(sound), 1.0F, 1.0F);
                     }
                     else {
-                        sender.sendMessage(ChatColor.RED + "You don't have permission to use this command!");
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix) + "" + ChatColor.RED + "You don't have permission to use this command!");
                     }
                 }
                 else if (args[0].equalsIgnoreCase("help")) {
-                    player.sendMessage(ChatColor.AQUA + "" + ChatColor.STRIKETHROUGH + "|              |" + "\n" + ChatColor.YELLOW + "/Armorswap reload" + "\n" + "/Armorswap head" + "\n" + ChatColor.AQUA + "" + ChatColor.STRIKETHROUGH + "|              |");
+                    player.sendMessage(ChatColor.AQUA + "" + ChatColor.RESET + "" + ChatColor.STRIKETHROUGH + "|              |" + "\n" + "\n" + ChatColor.YELLOW + "* /Armorswap reload - Reloads the plugin" + "\n" + "* /Armorswap head - Replace player head with holding item" + "\n" + "\n" + ChatColor.AQUA + "" + ChatColor.RESET + "" + "|              |");
                 }
                 else {
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix) + " " + ChatColor.translateAlternateColorCodes('&',wrongusage));
