@@ -1,9 +1,11 @@
 # ArmorSwap
 
-##About Armorswap
+## About Armorswap
+
 A  lightweight plugin! that adds the functionality to switch armor with you, armor stand, and item frame, and additional functionality.
 
-##Features
+## Features
+
 - Ability to switch armor you wearing with the one you hold.
 - Ability to switch armor you wearing with armor stand (Shift right-click).
 - Ability to switch armor you wearing with item frame (Shift right-click).
@@ -13,7 +15,7 @@ A  lightweight plugin! that adds the functionality to switch armor with you, arm
 - Disable each feature in the config
 - Fully customizable.
 
-##Commands and permissions
+## Commands and permissions
 
 `/Armor` Enable swapping for command executor
 `/Armor head` Swap item in hand to head
