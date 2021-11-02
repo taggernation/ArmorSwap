@@ -18,7 +18,11 @@ A  lightweight plugin! that adds the functionality to switch armor with you, arm
 ## Commands and permissions
 
 `/Armor` Enable swapping for command executor
+
 `/Armor head` Swap item in hand to head
+
 - Permission: Armorswap.command.head
+
 `/Armor reload` Reload plugin config
+
 - Permission: Armorswap.command.reload
