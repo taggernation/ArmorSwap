@@ -8,7 +8,7 @@
 
 ## About Armorswap
 
-A  lightweight plugin! that adds the functionality to switch armor with you, armor stand, and item frame, and additional functionality.
+A lightweight plugin! that adds the functionality to switch armor with you, armor stand, and item frame, and much more.
 
 ## Features
 
