@@ -1,4 +1,10 @@
-# ArmorSwap
+<h1 align="center">ArmorSwap</h1>
+<div align="center">
+  
+![Spiget Downloads](https://img.shields.io/spiget/downloads/97332?color=ffd000&label=Spigot%20Downloads&style=for-the-badge)
+![GitHub all releases](https://img.shields.io/github/downloads/taggernation/ArmorSwap/total?color=f0f6fc&label=GitHub%20Downloads&style=for-the-badge)
+
+</div>
 
 ## About Armorswap
 
