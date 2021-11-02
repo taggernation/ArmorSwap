@@ -27,7 +27,7 @@ public class onRightClick implements Listener {
             int value = Objects.requireNonNull(data.get(new NamespacedKey(ArmorSwap.getPlugin(), "ArmorSwapEnabled"), PersistentDataType.INTEGER));
             if (value == 1) {
                 if (Objects.equals(event.getItem(), player.getInventory().getItemInMainHand())) {
-                    if (event.getAction() == Action.RIGHT_CLICK_AIR) {
+                    if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK && !Objects.requireNonNull(event.getClickedBlock()).getType().isInteractable()) {
                         ItemStack Item = player.getInventory().getItemInMainHand();
 
                         if (Item.getType().toString().toLowerCase().contains("helmet")) {
