@@ -14,4 +14,3 @@ ArmorSwap is a plugin to swap item by right clicking
 - /armorswapreload `Reload plugin config`
   Permission: `Armorswap.command.reload`
 
-### This is a Test project will imporve overtime as I learn
