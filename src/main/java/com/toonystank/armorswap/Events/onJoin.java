@@ -10,13 +10,17 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-public class onJoin implements Listener {
 
+public class onJoin implements Listener {
+    String prefix = ArmorSwap.getPlugin().getConfig().getString("Prefix");
+    String enable = ArmorSwap.getPlugin().getConfig().getString("Enable");
     @EventHandler
     public void onJoinEvent(PlayerJoinEvent event) {
         Player p = event.getPlayer();
         PersistentDataContainer data = p.getPersistentDataContainer();
-        p.sendMessage(ChatColor.AQUA + "Armor swap is enabled");
-        data.set(new NamespacedKey(ArmorSwap.getPlugin(), "ArmorSwapEnabled"), PersistentDataType.INTEGER, 1);
+        if (data.get(new NamespacedKey(ArmorSwap.getPlugin(), "ArmorSwapEnabled"), PersistentDataType.INTEGER) == null) {
+            p.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix) + " " + ChatColor.translateAlternateColorCodes('&',enable));
+            data.set(new NamespacedKey(ArmorSwap.getPlugin(), "ArmorSwapEnabled"), PersistentDataType.INTEGER, 1);
+        }
     }
 }
