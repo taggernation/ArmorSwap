@@ -6,12 +6,6 @@ authors: [ Edward ]
 description: Simple Armorswap plugin. Swap armor by right clicking (This is a test project)
 website: https://taggernation.com
 commands:
-  Armor:
+  Armorswap:
     description: Enable or disable armor swapping
-    usage: /<command>
-  Head:
-    description: Swap item to your head
-    usage: /<command>
-  armorswapreload:
-    description: reload Armorswap plugin
     usage: /<command>

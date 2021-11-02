@@ -33,7 +33,7 @@ public final class ArmorSwap extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new onItemFrameRightClick(), this);
 
         // Commands
-        Objects.requireNonNull(getCommand("Armor")).setExecutor(new EnableSwap());
+        Objects.requireNonNull(getCommand("Armorswap")).setExecutor(new EnableSwap());
 
         // Config
         getConfig().options().copyDefaults();
