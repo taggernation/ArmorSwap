@@ -1,4 +1,4 @@
-<h1 align="center">ArmorSwap</h1>
+<h1 align="center"><img height="35" src="https://i.pinimg.com/originals/e6/19/26/e619260a9a2aa8dfa91654e9906ba0b1.gif">ArmorSwap</h1>
 <div align="center">
   
 ![Spiget Downloads](https://img.shields.io/spiget/downloads/97332?color=ffd000&label=Spigot%20Downloads&style=for-the-badge)
