@@ -1,7 +1,6 @@
 package com.toonystank.armorswap.Events;
 
 import com.toonystank.armorswap.ArmorSwap;
-import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
@@ -62,9 +61,6 @@ public class onRightClick implements Listener {
                             player.getInventory().setItemInMainHand(returnItem);
                             player.getInventory().setLeggings(Item);
                             player.playSound(player.getLocation(), Sound.valueOf(sound), 1.0F, 1.0F);
-                        }
-                        else {
-                            player.sendMessage(ChatColor.AQUA + "ItemInHand " + Item);
                         }
                     }
                 }

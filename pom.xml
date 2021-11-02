@@ -13,7 +13,7 @@
 
     <description>Simple Armorswap plugin. Swap armor by right clicking (This is a test project)</description>
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>16</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <url>https://taggernation.com</url>
