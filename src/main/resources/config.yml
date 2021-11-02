@@ -6,3 +6,15 @@ Main_hand_swap: true
 Item_frame_swap: true
 #sound to play on swap
 Sound: ITEM_ARMOR_EQUIP_TURTLE
+#----------------------------------------------------------------------------------------------------------------
+#
+#				                 Language
+#
+#----------------------------------------------------------------------------------------------------------------
+# prefix
+Prefix: "&bArmorswap &7- "
+# when player runs /armorswap
+Enable: "&bArmor swap is now enabled for you"
+Disable: "&bArmor swap is now disabled for you"
+# on wrong usage
+usageError: "&bUse &7/armorswap&b to enable armor swap"
