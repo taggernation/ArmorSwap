@@ -24,7 +24,7 @@ public class onArmorStandRightClick implements Listener {
     public void onArmorStandRightClickEvent(PlayerInteractAtEntityEvent event) {
         String sound = Objects.requireNonNull(ArmorSwap.getPlugin().getConfig().getString("Sound"));
         boolean isEnabled = ArmorSwap.getPlugin().getConfig().getBoolean("Armor_stand_swap");
-        if (isEnabled){
+        if (isEnabled && !event.isCancelled()){
             Player player = event.getPlayer();
             PersistentDataContainer data = player.getPersistentDataContainer();
             int value = Objects.requireNonNull(data.get(new NamespacedKey(ArmorSwap.getPlugin(), "ArmorSwapEnabled"), PersistentDataType.INTEGER));
@@ -43,6 +43,7 @@ public class onArmorStandRightClick implements Listener {
                     ItemStack standMainHand = Objects.requireNonNull(stand.getEquipment().getItemInMainHand());
                     ItemStack standOffHand = Objects.requireNonNull(stand.getEquipment().getItemInOffHand());
                     // player
+
                     ItemStack playerBoots = Objects.requireNonNull(player.getEquipment()).getBoots();
                     ItemStack playerLeggings = Objects.requireNonNull(player.getEquipment()).getLeggings();
                     ItemStack playerChestplate = Objects.requireNonNull(player.getEquipment()).getChestplate();

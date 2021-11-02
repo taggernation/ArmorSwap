@@ -20,14 +20,15 @@ public class onItemFrameRightClick implements Listener {
     @EventHandler
     public void onItemFrameRightClickEvent(PlayerInteractEntityEvent event) {
         boolean isEnabled = ArmorSwap.getPlugin().getConfig().getBoolean("Item_frame_swap");
-        if (isEnabled) {
+        if (isEnabled && !event.isCancelled()) {
             Player player = event.getPlayer();
             PersistentDataContainer data = player.getPersistentDataContainer();
             int value = Objects.requireNonNull(data.get(new NamespacedKey(ArmorSwap.getPlugin(), "ArmorSwapEnabled"), PersistentDataType.INTEGER));
             if (value == 1) {
                 if (!player.isSneaking()) return;
                 Entity entity = event.getRightClicked();
-                if (entity.getType().equals(EntityType.ITEM_FRAME)) {
+                // Item frame or glow item frame
+                if (entity.getType().equals(EntityType.ITEM_FRAME) || entity.getType().equals(EntityType.GLOW_ITEM_FRAME)) {
                     event.setCancelled(true);
                     ItemFrame clickedFrame = (ItemFrame) entity;
                     ItemStack itemOnFrame = clickedFrame.getItem();
