@@ -1,16 +1,22 @@
 # ArmorSwap
 
-## About
-ArmorSwap is a plugin to swap item by right clicking
+##About Armorswap
+A  lightweight plugin! that adds the functionality to switch armor with you, armor stand, and item frame, and additional functionality.
 
-## Compatibility
-- Java 16
-- Paper 1.17
+##Features
+- Ability to switch armor you wearing with the one you hold.
+- Ability to switch armor you wearing with armor stand (Shift right-click).
+- Ability to switch armor you wearing with item frame (Shift right-click).
+- A command to switch items to your head.
+- A command to toggle  plugin functionality per player
+- Works with world guard and other similar plugins
+- Disable each feature in the config
+- Fully customizable.
 
-## Commands and Permissions
-- /Armor `Enable swaping for command executor`
-- /Head `Swap item in hand to head` 
-  Permission: `Armorswap.command.head` 
-- /armorswapreload `Reload plugin config`
-  Permission: `Armorswap.command.reload`
+##Commands and permissions
 
+`/Armor` Enable swapping for command executor
+`/Armor head` Swap item in hand to head
+- Permission: Armorswap.command.head
+`/Armor reload` Reload plugin config
+- Permission: Armorswap.command.reload
