@@ -6,12 +6,12 @@
 
     <groupId>com.toonystank</groupId>
     <artifactId>ArmorSwap</artifactId>
-    <version>1.0</version>
+    <version>1.0.0.1102205</version>
     <packaging>jar</packaging>
 
     <name>ArmorSwap</name>
 
-    <description>Simple Armorswap plugin. Swap armor by right clicking (This is a test project)</description>
+    <description>ArmorSwap is a plugin to swap items by right-clicking</description>
     <properties>
         <java.version>16</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
