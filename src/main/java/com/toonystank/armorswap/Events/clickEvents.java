@@ -1,6 +1,7 @@
 package com.toonystank.armorswap.Events;
 
 import com.toonystank.armorswap.ArmorSwap;
+import com.toonystank.armorswap.utils.Clicked;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
@@ -19,12 +20,12 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.Objects;
 
 public class clickEvents implements Listener {
+    String sound = ArmorSwap.getPlugin().getConfig().getString( "Sound");
     //
     // ARMOR STAND EVENTS STARTS HERE
     //
     @EventHandler
     public void onArmorStandRightClickEvent(PlayerInteractAtEntityEvent event) {
-        String sound = Objects.requireNonNull(ArmorSwap.getPlugin().getConfig().getString("Sound"));
         boolean isEnabled = ArmorSwap.getPlugin().getConfig().getBoolean("Armor_stand_swap");
         if (isEnabled && !event.isCancelled()){
             Player player = event.getPlayer();
@@ -126,48 +127,24 @@ public class clickEvents implements Listener {
     @EventHandler
     public void onArmorRightClickEvent(PlayerInteractEvent event) {
         boolean isEnabled = ArmorSwap.getPlugin().getConfig().getBoolean("Main_hand_swap");
-        String sound = Objects.requireNonNull(ArmorSwap.getPlugin().getConfig().getString("Sound"));
         if (isEnabled) {
             Player player = event.getPlayer();
             PersistentDataContainer data = player.getPersistentDataContainer();
             int value = Objects.requireNonNull(data.get(new NamespacedKey(ArmorSwap.getPlugin(), "ArmorSwapEnabled"), PersistentDataType.INTEGER));
             if (value == 1) {
-                if (Objects.equals(event.getItem(), player.getInventory().getItemInMainHand())) {
-                    if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK && !Objects.requireNonNull(event.getClickedBlock()).getType().isInteractable()) {
-                        ItemStack Item = player.getInventory().getItemInMainHand();
-
-                        if (Item.getType().toString().toLowerCase().contains("helmet")) {
-
-                            ItemStack returnItem = Objects.requireNonNull(player.getInventory().getHelmet());
-                            if (returnItem.containsEnchantment(Enchantment.BINDING_CURSE)) return;
-                            player.getInventory().setItemInMainHand(returnItem);
-                            player.getInventory().setHelmet(Item);
-                            player.playSound(player.getLocation(), Sound.valueOf(sound), 1.0F, 1.0F);
-                        }
-                        else if (Item.getType().toString().toLowerCase().contains("chestplate")) {
-
-                            ItemStack returnItem = Objects.requireNonNull(player.getInventory().getChestplate());
-                            if (returnItem.containsEnchantment(Enchantment.BINDING_CURSE)) return;
-                            player.getInventory().setItemInMainHand(returnItem);
-                            player.getInventory().setChestplate(Item);
-                            player.playSound(player.getLocation(), Sound.valueOf(sound), 1.0F, 1.0F);
-                        }
-                        else if (Item.getType().toString().toLowerCase().contains("boots")) {
-
-                            ItemStack returnItem = Objects.requireNonNull(player.getInventory().getBoots());
-                            if (returnItem.containsEnchantment(Enchantment.BINDING_CURSE)) return;
-                            player.getInventory().setItemInMainHand(returnItem);
-                            player.getInventory().setBoots(Item);
-                            player.playSound(player.getLocation(), Sound.valueOf(sound), 1.0F, 1.0F);
-                        }
-                        else if (Item.getType().toString().toLowerCase().contains("leggings")) {
-
-                            ItemStack returnItem = Objects.requireNonNull(player.getInventory().getLeggings());
-                            if (returnItem.containsEnchantment(Enchantment.BINDING_CURSE)) return;
-                            player.getInventory().setItemInMainHand(returnItem);
-                            player.getInventory().setLeggings(Item);
-                            player.playSound(player.getLocation(), Sound.valueOf(sound), 1.0F, 1.0F);
-                        }
+                if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK && !Objects.requireNonNull(event.getClickedBlock()).getType().isInteractable()) {
+                    ItemStack Item = player.getInventory().getItemInMainHand();
+                    if (Item.getType().toString().toLowerCase().contains("helmet")) {
+                        Clicked.playerItem(player, Item, sound);
+                    }
+                    else if (Item.getType().toString().toLowerCase().contains("chestplate")) {
+                        Clicked.playerItem(player, Item, sound);
+                    }
+                    else if (Item.getType().toString().toLowerCase().contains("boots")) {
+                        Clicked.playerItem(player, Item, sound);
+                    }
+                    else if (Item.getType().toString().toLowerCase().contains("leggings")) {
+                        Clicked.playerItem(player, Item, sound);
                     }
                 }
             }

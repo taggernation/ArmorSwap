@@ -3,8 +3,7 @@ package com.toonystank.armorswap.utils;
 import com.toonystank.armorswap.ArmorSwap;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-
-import java.util.Objects;
+import org.bukkit.plugin.PluginLogger;
 
 public class getConfigMessages {
 
@@ -13,24 +12,34 @@ public class getConfigMessages {
     }
     public static void getDisable(Player p) {
         try {
-            p.sendMessage(getPrefix() + " " + ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(ArmorSwap.getPlugin().getConfig().getString("Disable"))));
+            String message = ArmorSwap.getPlugin().getConfig().getString("Disable");
+            if (message != null) {
+                p.sendMessage(getPrefix() + " " + ChatColor.translateAlternateColorCodes('&', message));
+            }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            PluginLogger.getLogger(e.getMessage());
         }
     }
     public static void getEnable(Player p) {
         try {
-            p.sendMessage(getPrefix() + " " + ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(ArmorSwap.getPlugin().getConfig().getString("Enable"))));
+            String message = ArmorSwap.getPlugin().getConfig().getString("Enable");
+            if (message != null) {
+                p.sendMessage(getPrefix() + " " + ChatColor.translateAlternateColorCodes('&', message));
+            }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            PluginLogger.getLogger(e.getMessage());
         }
     }
     public static void getWrongusage(Player p) {
         try {
-            p.sendMessage(getPrefix() + " " + ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(ArmorSwap.getPlugin().getConfig().getString("usageError"))));
+            String message = ArmorSwap.getPlugin().getConfig().getString("usageError");
+            if (message != null) {
+                p.sendMessage(getPrefix() + " " + ChatColor.translateAlternateColorCodes('&', message));
+            }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            PluginLogger.getLogger(e.getMessage());
         }
     }
-
 }
+
+
