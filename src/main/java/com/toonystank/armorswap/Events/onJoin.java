@@ -1,6 +1,7 @@
 package com.toonystank.armorswap.Events;
 
 import com.toonystank.armorswap.ArmorSwap;
+import com.toonystank.armorswap.utils.getConfigMessages;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
@@ -12,14 +13,14 @@ import org.bukkit.persistence.PersistentDataType;
 
 
 public class onJoin implements Listener {
-    String prefix = ArmorSwap.getPlugin().getConfig().getString("Prefix");
-    String enable = ArmorSwap.getPlugin().getConfig().getString("Enable");
+
+
     @EventHandler
     public void onJoinEvent(PlayerJoinEvent event) {
         Player p = event.getPlayer();
         PersistentDataContainer data = p.getPersistentDataContainer();
         if (data.get(new NamespacedKey(ArmorSwap.getPlugin(), "ArmorSwapEnabled"), PersistentDataType.INTEGER) == null) {
-            p.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix) + " " + ChatColor.translateAlternateColorCodes('&',enable));
+            getConfigMessages.getEnable(p);
             data.set(new NamespacedKey(ArmorSwap.getPlugin(), "ArmorSwapEnabled"), PersistentDataType.INTEGER, 1);
         }
     }
