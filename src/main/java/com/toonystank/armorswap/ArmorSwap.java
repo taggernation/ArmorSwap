@@ -1,10 +1,7 @@
 package com.toonystank.armorswap;
 
 import com.toonystank.armorswap.Commands.EnableSwap;
-import com.toonystank.armorswap.Events.onItemFrameRightClick;
-import com.toonystank.armorswap.Events.onJoin;
-import com.toonystank.armorswap.Events.onRightClick;
-import com.toonystank.armorswap.Events.onArmorStandRightClick;
+import com.toonystank.armorswap.Events.*;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -27,10 +24,8 @@ public final class ArmorSwap extends JavaPlugin {
         setPlugin(this);
         // Events
         try {
-            getServer().getPluginManager().registerEvents(new onRightClick(), this);
             getServer().getPluginManager().registerEvents(new onJoin(), this);
-            getServer().getPluginManager().registerEvents(new onArmorStandRightClick(), this);
-            getServer().getPluginManager().registerEvents(new onItemFrameRightClick(), this);
+            getServer().getPluginManager().registerEvents(new clickEvents(), this);
 
             // Commands
             Objects.requireNonNull(getCommand("Armorswap")).setExecutor(new EnableSwap());
@@ -38,6 +33,7 @@ public final class ArmorSwap extends JavaPlugin {
             // Config
             getConfig().options().copyDefaults();
             saveDefaultConfig();
+
             getLogger().info(ChatColor.AQUA + "ArmorSwap " + ChatColor.UNDERLINE + "Successfully loaded.");
         }catch (Exception e) {
             getLogger().info(ChatColor.RED + "ArmorSwap " + ChatColor.UNDERLINE + "Failed to load.");
