@@ -12,7 +12,7 @@ Sound: ITEM_ARMOR_EQUIP_TURTLE
 #
 #----------------------------------------------------------------------------------------------------------------
 # prefix
-Prefix: "&bArmorswap &7-"
+Prefix: "&bArmorSwap &7-"
 # when player runs /armorswap
 Enable: "&bArmor swap is now enabled for you"
 Disable: "&bArmor swap is now disabled for you"
