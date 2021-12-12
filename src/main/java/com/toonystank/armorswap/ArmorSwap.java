@@ -2,6 +2,7 @@ package com.toonystank.armorswap;
 
 import com.toonystank.armorswap.Commands.EnableSwap;
 import com.toonystank.armorswap.Events.*;
+import com.toonystank.armorswap.utils.UpdateChecker;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -21,6 +22,13 @@ public final class ArmorSwap extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        new UpdateChecker(this, 97332).getVersion(version -> {
+            if (this.getDescription().getVersion().equals(version)) {
+                getLogger().info("There is not a new update available.");
+            } else {
+                getLogger().info("There is a new update available." + "/n" + ChatColor.RED + "https://www.spigotmc.org/resources/armorswap-swap-items-by-right-clicking.97332/" );
+            }
+        });
         setPlugin(this);
         // Events
         try {
