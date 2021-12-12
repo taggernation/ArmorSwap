@@ -14,7 +14,7 @@ public class getConfigMessages {
         try {
             String message = ArmorSwap.getPlugin().getConfig().getString("Disable");
             if (message != null) {
-                p.sendMessage(getPrefix() + " " + ChatColor.translateAlternateColorCodes('&', message));
+                p.sendMessage(ChatColor.translateAlternateColorCodes('&', getPrefix()) + " " + ChatColor.translateAlternateColorCodes('&', message));
             }
         } catch (Exception e) {
             PluginLogger.getLogger(e.getMessage());
@@ -24,7 +24,7 @@ public class getConfigMessages {
         try {
             String message = ArmorSwap.getPlugin().getConfig().getString("Enable");
             if (message != null) {
-                p.sendMessage(getPrefix() + " " + ChatColor.translateAlternateColorCodes('&', message));
+                p.sendMessage(ChatColor.translateAlternateColorCodes('&', getPrefix()) + " " + ChatColor.translateAlternateColorCodes('&', message));
             }
         } catch (Exception e) {
             PluginLogger.getLogger(e.getMessage());
@@ -34,7 +34,7 @@ public class getConfigMessages {
         try {
             String message = ArmorSwap.getPlugin().getConfig().getString("usageError");
             if (message != null) {
-                p.sendMessage(getPrefix() + " " + ChatColor.translateAlternateColorCodes('&', message));
+                p.sendMessage(ChatColor.translateAlternateColorCodes('&', getPrefix()) + " " + ChatColor.translateAlternateColorCodes('&', message));
             }
         } catch (Exception e) {
             PluginLogger.getLogger(e.getMessage());
