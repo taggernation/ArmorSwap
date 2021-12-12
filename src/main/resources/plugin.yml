@@ -1,7 +1,7 @@
 name: ArmorSwap
 version: '${project.version}'
 main: com.toonystank.armorswap.ArmorSwap
-api-version: 1.8
+api-version: 1.14
 authors: [ Edward ]
 description: Simple Armorswap plugin. Swap armor by right clicking (This is a test project)
 website: https://taggernation.com
