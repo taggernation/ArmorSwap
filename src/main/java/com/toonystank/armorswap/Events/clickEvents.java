@@ -44,7 +44,7 @@ public class clickEvents implements Listener {
 
                     event.setCancelled(true);
                     ArmorStand stand = (ArmorStand) entity;
-                    if (stand.isInvisible()) return;
+                    if (!stand.isVisible()) return;
 
                     // armor stand set armor
                     if (CanMove(playerTool(player, getType.boots))) {
