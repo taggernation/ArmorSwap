@@ -6,6 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
+import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -21,14 +22,15 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.Objects;
 
 public class clickEvents implements Listener {
-    String sound = ArmorSwap.getPlugin().getConfig().getString( "Sound");
+    String sound = ArmorSwap.getPlugin().getConfig().getString("Sound");
+
     //
     // ARMOR STAND EVENTS STARTS HERE
     //
     @EventHandler
     public void onArmorStandRightClickEvent(PlayerInteractAtEntityEvent event) {
         boolean isEnabled = ArmorSwap.getPlugin().getConfig().getBoolean("Armor_stand_swap");
-        if (isEnabled && !event.isCancelled()){
+        if (isEnabled && !event.isCancelled()) {
             Player player = event.getPlayer();
 
             PersistentDataContainer data = player.getPersistentDataContainer();
@@ -40,7 +42,7 @@ public class clickEvents implements Listener {
                 if (!player.isSneaking()) return;
                 Entity entity = event.getRightClicked();
 
-                if (entity.getType().equals(EntityType.ARMOR_STAND)){
+                if (entity.getType().equals(EntityType.ARMOR_STAND)) {
 
                     event.setCancelled(true);
                     ArmorStand stand = (ArmorStand) entity;
@@ -97,14 +99,17 @@ public class clickEvents implements Listener {
             case offHand -> Objects.requireNonNull(entity.getEquipment()).getItemInOffHand();
         };
     }
-    public enum getType{
+
+    public enum getType {
         boots, leggings, chestPlate, helmet, mainHand, offHand
     }
-    boolean CanMove(ItemStack item){
+
+    boolean CanMove(ItemStack item) {
         if (item == null) return true;
         if (item.getType().equals(Material.AIR)) return true;
         return !item.containsEnchantment(Enchantment.BINDING_CURSE);
     }
+
     //
     // ARMOR STAND EVENT ENDS HERE
     //
@@ -134,10 +139,10 @@ public class clickEvents implements Listener {
                     if (playerItem.getAmount() == 1) {
                         clickedFrame.setItem(playerItem);
                         player.getInventory().setItemInMainHand(itemOnFrame);
-                    }else {
+                    } else {
                         if (!player.getInventory().contains(Material.AIR)) {
                             ItemStack[] items = player.getInventory().getContents();
-                            for (ItemStack item: items) {
+                            for (ItemStack item : items) {
                                 if (item.getType() == itemOnFrame.getType()) {
                                     if (item.getAmount() <= item.getMaxStackSize()) {
                                         giveItem(playerItem, itemOnFrame, clickedFrame, player);
@@ -154,12 +159,14 @@ public class clickEvents implements Listener {
             }
         }
     }
+
     public void giveItem(ItemStack playerItem, ItemStack itemOnFrame, ItemFrame clickedFrame, Player player) {
         playerItem.setAmount(playerItem.getAmount() - 1);
         clickedFrame.setItem(playerItem);
         player.getInventory().addItem(itemOnFrame);
 
     }
+
     //
     // ITEM FRAME EVENT ENDS HERE
     //
@@ -175,26 +182,19 @@ public class clickEvents implements Listener {
             int value = Objects.requireNonNull(data
                     .get(new NamespacedKey(ArmorSwap.getPlugin(), "ArmorSwapEnabled"), PersistentDataType.INTEGER));
             if (value == 1) {
-
-                if (event.getAction()
-                        ==
-                        Action.RIGHT_CLICK_AIR
-                        ||
-                        event.getAction()
-                                ==
-                                Action.RIGHT_CLICK_BLOCK
-                                &&
-                                !Objects.requireNonNull(event.getClickedBlock())
-                                        .getType().isInteractable())
-                {
-
-                    ItemStack Item = player.getInventory().getItemInMainHand();
-                    Clicked.playerItem(player, Item, sound);
+                if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                    Block intractable = event.getClickedBlock();
+                    if (intractable != null) {
+                        if (!intractable.getType().isInteractable()) {
+                            ItemStack Item = player.getInventory().getItemInMainHand();
+                            Clicked.playerItem(player, Item, sound);
+                        }
+                    }
                 }
             }
         }
+        //
+        // RIGHT CLICK ON ARMOR EVENT ENDS HERE
+        //
     }
-    //
-    // RIGHT CLICK ON ARMOR EVENT ENDS HERE
-    //
 }
