@@ -26,27 +26,23 @@ public final class ArmorSwap extends JavaPlugin {
             if (this.getDescription().getVersion().equals(version)) {
                 getLogger().info("There is not a new update available.");
             } else {
-                getLogger().info("There is a new update available." + "/nl" + ChatColor.RED + "https://www.spigotmc.org/resources/armorswap-swap-items-by-right-clicking.97332/" );
+                getLogger().info("There is a new update available." + "\n" + ChatColor.RED + "https://www.spigotmc.org/resources/armorswap-swap-items-by-right-clicking.97332/");
             }
         });
         setPlugin(this);
         // Events
-        try {
-            getServer().getPluginManager().registerEvents(new onJoin(), this);
-            getServer().getPluginManager().registerEvents(new clickEvents(), this);
+        getServer().getPluginManager().registerEvents(new onJoin(), this);
+        getServer().getPluginManager().registerEvents(new clickEvents(), this);
 
-            // Commands
-            Objects.requireNonNull(getCommand("Armorswap")).setExecutor(new EnableSwap());
+        // Commands
+        Objects.requireNonNull(getCommand("Armorswap")).setExecutor(new EnableSwap());
 
-            // Config
-            getConfig().options().copyDefaults();
-            saveDefaultConfig();
+        // Config
+        getConfig().options().copyDefaults();
+        saveDefaultConfig();
 
-            getLogger().info(ChatColor.AQUA + "ArmorSwap " + ChatColor.UNDERLINE + "Successfully loaded.");
-        }catch (Exception e) {
-            getLogger().info(ChatColor.RED + "ArmorSwap " + ChatColor.UNDERLINE + "Failed to load.");
-        }
-
+        getLogger().info(ChatColor.AQUA + "ArmorSwap " + ChatColor.UNDERLINE + "Successfully loaded.");
+        getLogger().info(ChatColor.RED + "ArmorSwap " + ChatColor.UNDERLINE + "Failed to load.");
 
     }
 
