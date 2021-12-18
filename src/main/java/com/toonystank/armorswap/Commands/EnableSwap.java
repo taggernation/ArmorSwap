@@ -47,7 +47,7 @@ public class EnableSwap implements CommandExecutor {
                     player.sendMessage(ChatColor.AQUA + "" + ChatColor.RESET + "" + ChatColor.STRIKETHROUGH + "|              |" + "\n" + "\n" + ChatColor.YELLOW + "* /Armorswap reload - Reloads the plugin" + "\n" + "* /Armorswap head - Replace player head with holding item" + "\n" + "\n" + ChatColor.AQUA + "" + ChatColor.RESET + "" + "|              |");
                 }
                 else {
-                    getConfigMessages.getWrongusage(player);
+                    getConfigMessages.getWrongUsage(player);
                 }
             }
             else {
