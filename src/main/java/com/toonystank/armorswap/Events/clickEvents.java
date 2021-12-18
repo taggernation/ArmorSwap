@@ -33,10 +33,7 @@ public class clickEvents implements Listener {
         if (isEnabled && !event.isCancelled()) {
             Player player = event.getPlayer();
 
-            PersistentDataContainer data = player.getPersistentDataContainer();
-
-            int value = Objects.requireNonNull(data
-                    .get(new NamespacedKey(ArmorSwap.getPlugin(), "ArmorSwapEnabled"), PersistentDataType.INTEGER));
+            int value = getArmorSwapEnabled(player);
             if (value == 1) {
 
                 if (!player.isSneaking()) return;
@@ -107,7 +104,7 @@ public class clickEvents implements Listener {
     boolean CanMove(ItemStack item) {
         if (item == null) return true;
         if (item.getType().equals(Material.AIR)) return true;
-        return true;
+        return !item.containsEnchantment(Enchantment.BINDING_CURSE);
     }
 
     //
@@ -121,9 +118,7 @@ public class clickEvents implements Listener {
         boolean isEnabled = ArmorSwap.getPlugin().getConfig().getBoolean("Item_frame_swap");
         if (isEnabled && !event.isCancelled()) {
             Player player = event.getPlayer();
-            PersistentDataContainer data = player.getPersistentDataContainer();
-            int value = Objects.requireNonNull(data
-                    .get(new NamespacedKey(ArmorSwap.getPlugin(), "ArmorSwapEnabled"), PersistentDataType.INTEGER));
+            int value = getArmorSwapEnabled(player);
             if (value == 1) {
                 if (!player.isSneaking()) return;
                 Entity entity = event.getRightClicked();
@@ -178,9 +173,7 @@ public class clickEvents implements Listener {
         boolean isEnabled = ArmorSwap.getPlugin().getConfig().getBoolean("Main_hand_swap");
         if (isEnabled) {
             Player player = event.getPlayer();
-            PersistentDataContainer data = player.getPersistentDataContainer();
-            int value = Objects.requireNonNull(data
-                    .get(new NamespacedKey(ArmorSwap.getPlugin(), "ArmorSwapEnabled"), PersistentDataType.INTEGER));
+            int value = getArmorSwapEnabled(player);
             if (value == 1) {
                 if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
                     Block intractable = event.getClickedBlock();
@@ -196,5 +189,10 @@ public class clickEvents implements Listener {
         //
         // RIGHT CLICK ON ARMOR EVENT ENDS HERE
         //
+    }
+    public int getArmorSwapEnabled(Player player) {
+        PersistentDataContainer data = player.getPersistentDataContainer();
+        return Objects.requireNonNull(
+                data.get(new NamespacedKey(ArmorSwap.getPlugin(), "ArmorSwapEnabled"), PersistentDataType.INTEGER));
     }
 }
