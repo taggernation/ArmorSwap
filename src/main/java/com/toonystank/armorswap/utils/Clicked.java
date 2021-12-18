@@ -14,7 +14,7 @@ public class Clicked {
             player.getInventory().setHelmet(item);
             player.playSound(player.getLocation(), Sound.valueOf(sound), 1.0F, 1.0F);
         }
-        else if (item.getType().toString().toLowerCase().contains("chestplate")) {
+        else if (item.getType().toString().toLowerCase().contains("chestplate") || item.getType().toString().toLowerCase().contains("elytra")) {
             ItemStack returnItem = player.getInventory().getChestplate();
             if (returnItem == null) return;
             player.getInventory().setItemInMainHand(returnItem);
