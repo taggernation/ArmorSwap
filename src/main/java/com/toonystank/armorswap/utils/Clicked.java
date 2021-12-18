@@ -35,12 +35,5 @@ public class Clicked {
             player.getInventory().setLeggings(item);
             player.playSound(player.getLocation(), Sound.valueOf(sound), 1.0F, 1.0F);
         }
-        else if (item.getType().toString().toLowerCase().contains("elytra")) {
-            ItemStack returnItem = player.getInventory().getChestplate();
-            if (returnItem == null) return;
-            player.getInventory().setItemInMainHand(returnItem);
-            player.getInventory().setChestplate(item);
-            player.playSound(player.getLocation(), Sound.valueOf(sound), 1.0F, 1.0F);
-        }
     }
 }
