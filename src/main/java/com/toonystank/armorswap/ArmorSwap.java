@@ -42,8 +42,6 @@ public final class ArmorSwap extends JavaPlugin {
         saveDefaultConfig();
 
         getLogger().info(ChatColor.AQUA + "ArmorSwap " + ChatColor.UNDERLINE + "Successfully loaded.");
-        getLogger().info(ChatColor.RED + "ArmorSwap " + ChatColor.UNDERLINE + "Failed to load.");
-
     }
 
 }

@@ -175,21 +175,22 @@ public class clickEvents implements Listener {
             Player player = event.getPlayer();
             int value = getArmorSwapEnabled(player);
             if (value == 1) {
-                if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                    Block intractable = event.getClickedBlock();
-                    if (intractable != null) {
-                        if (!intractable.getType().isInteractable()) {
-                            ItemStack Item = player.getInventory().getItemInMainHand();
-                            Clicked.playerItem(player, Item, sound);
-                        }
+                Block block = event.getClickedBlock();
+                if (block != null) {
+                    if (!block.getType().isInteractable()) {
+                        ItemStack Item = player.getInventory().getItemInMainHand();
+                        Clicked.playerItem(player, Item, sound);
                     }
+                }else {
+                    ItemStack Item = player.getInventory().getItemInMainHand();
+                    Clicked.playerItem(player, Item, sound);
                 }
             }
         }
+    }
         //
         // RIGHT CLICK ON ARMOR EVENT ENDS HERE
         //
-    }
     public int getArmorSwapEnabled(Player player) {
         PersistentDataContainer data = player.getPersistentDataContainer();
         return Objects.requireNonNull(
