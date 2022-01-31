@@ -29,6 +29,9 @@ public final class ArmorSwap extends JavaPlugin {
                 getLogger().info("There is a new update available." + "\n" + ChatColor.RED + "https://www.spigotmc.org/resources/armorswap-swap-items-by-right-clicking.97332/");
             }
         });
+        //bStats metrics
+        Metrics metrics = new Metrics(this, yourPluginID); //https://bstats.org/what-is-my-plugin-id
+        
         setPlugin(this);
         // Events
         getServer().getPluginManager().registerEvents(new onJoin(), this);
