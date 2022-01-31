@@ -104,7 +104,7 @@ public class clickEvents implements Listener {
     boolean CanMove(ItemStack item) {
         if (item == null) return true;
         if (item.getType().equals(Material.AIR)) return true;
-        return !item.containsEnchantment(Enchantment.BINDING_CURSE);
+        return true;
     }
 
     //

@@ -2,6 +2,7 @@ package com.toonystank.armorswap;
 
 import com.toonystank.armorswap.Commands.EnableSwap;
 import com.toonystank.armorswap.Events.*;
+import com.toonystank.armorswap.utils.Metrics;
 import com.toonystank.armorswap.utils.UpdateChecker;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -30,7 +31,7 @@ public final class ArmorSwap extends JavaPlugin {
             }
         });
         //bStats metrics
-        Metrics metrics = new Metrics(this, yourPluginID); //https://bstats.org/what-is-my-plugin-id
+        Metrics metrics = new Metrics(this, 14140); //https://bstats.org/what-is-my-plugin-id
         
         setPlugin(this);
         // Events
