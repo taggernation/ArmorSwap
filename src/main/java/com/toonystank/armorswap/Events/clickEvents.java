@@ -11,7 +11,6 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -43,40 +42,49 @@ public class clickEvents implements Listener {
 
                     event.setCancelled(true);
                     ArmorStand stand = (ArmorStand) entity;
+                    if (stand.getEquipment() == null) return;
                     if (!stand.isVisible()) return;
 
+                    ItemStack standBoots = Objects.requireNonNull(stand.getEquipment()).getBoots();
+                    ItemStack standLeggings = Objects.requireNonNull(stand.getEquipment()).getLeggings();
+                    ItemStack standChestplate = Objects.requireNonNull(stand.getEquipment()).getChestplate();
+                    ItemStack standHelmet = Objects.requireNonNull(stand.getEquipment()).getHelmet();
+                    ItemStack standMainHand = Objects.requireNonNull(stand.getEquipment().getItemInMainHand());
+                    ItemStack standOffHand = Objects.requireNonNull(stand.getEquipment().getItemInOffHand());
+                    // player
+
+                    ItemStack playerBoots = Objects.requireNonNull(player.getEquipment()).getBoots();
+                    ItemStack playerLeggings = Objects.requireNonNull(player.getEquipment()).getLeggings();
+                    ItemStack playerChestplate = Objects.requireNonNull(player.getEquipment()).getChestplate();
+                    ItemStack playerHelmet = Objects.requireNonNull(player.getEquipment()).getHelmet();
+                    ItemStack playerMainHand = Objects.requireNonNull(player.getEquipment().getItemInMainHand());
+                    ItemStack playerOffHand = Objects.requireNonNull(player.getEquipment().getItemInOffHand());
                     // armor stand set armor
-                    if (CanMove(playerTool(player, getType.boots))) {
-                        Objects.requireNonNull(stand.getEquipment())
-                                .setBoots(playerTool(player, getType.boots));
-                        Objects.requireNonNull(player.getEquipment())
-                                .setBoots(playerTool(stand, getType.boots));
+                    if (CanMove(standBoots) || CanMove(playerBoots)) {
+                        Objects.requireNonNull(stand.getEquipment()).setBoots(playerBoots);
+                        player.getInventory().setBoots(standBoots);
                     }
-                    if (CanMove(playerTool(player, getType.leggings))) {
-                        Objects.requireNonNull(stand.getEquipment())
-                                .setLeggings(playerTool(player, getType.leggings));
-                        Objects.requireNonNull(player.getEquipment())
-                                .setLeggings(playerTool(stand, getType.leggings));
+                    if (CanMove(standLeggings) || CanMove(playerLeggings)) {
+                        stand.getEquipment().setLeggings(playerLeggings);
+                        player.getInventory().setLeggings(standLeggings);
                     }
-                    if (CanMove(playerTool(player, getType.chestPlate))) {
-                        Objects.requireNonNull(stand.getEquipment())
-                                .setChestplate(playerTool(player, getType.chestPlate));
-                        Objects.requireNonNull(player.getEquipment())
-                                .setChestplate(playerTool(stand, getType.chestPlate));
+                    if (CanMove(standChestplate) || CanMove(playerChestplate)) {
+                        stand.getEquipment().setChestplate(playerChestplate);
+                        player.getInventory().setChestplate(standChestplate);
                     }
-                    if (CanMove(playerTool(player, getType.helmet))) {
-                        Objects.requireNonNull(stand.getEquipment())
-                                .setHelmet(playerTool(player, getType.helmet));
-                        Objects.requireNonNull(player.getEquipment())
-                                .setHelmet(playerTool(stand, getType.helmet));
+                    if (CanMove(standHelmet) || CanMove(playerHelmet)) {
+                        stand.getEquipment().setHelmet(playerHelmet);
+                        player.getInventory().setHelmet(standHelmet);
                     }
                     if (stand.hasArms()) {
-                        Objects.requireNonNull(stand.getEquipment())
-                                .setItemInMainHand(playerTool(player, getType.mainHand));
-                        stand.getEquipment().setItemInOffHand(playerTool(player, getType.offHand));
-                        Objects.requireNonNull(player.getEquipment())
-                                .setItemInMainHand(playerTool(stand, getType.mainHand));
-                        player.getEquipment().setItemInOffHand(playerTool(stand, getType.offHand));
+                        if (CanMove(standMainHand) || CanMove(playerMainHand)) {
+                            stand.getEquipment().setItemInMainHand(playerMainHand);
+                            player.getEquipment().setItemInMainHand(standMainHand);
+                        }
+                        if (CanMove(standOffHand) || CanMove(playerOffHand)) {
+                            stand.getEquipment().setItemInOffHand(playerOffHand);
+                            player.getEquipment().setItemInOffHand(standOffHand);
+                        }
                     }
 
                     player.playSound(player.getLocation(), Sound.valueOf(sound), 1.0F, 1.0F);
@@ -86,22 +94,7 @@ public class clickEvents implements Listener {
         }
     }
 
-    ItemStack playerTool(LivingEntity entity, getType type) {
-        return switch (type) {
-            case boots -> Objects.requireNonNull(entity.getEquipment()).getBoots();
-            case leggings -> Objects.requireNonNull(entity.getEquipment()).getLeggings();
-            case chestPlate -> Objects.requireNonNull(entity.getEquipment()).getChestplate();
-            case helmet -> Objects.requireNonNull(entity.getEquipment()).getHelmet();
-            case mainHand -> Objects.requireNonNull(entity.getEquipment()).getItemInMainHand();
-            case offHand -> Objects.requireNonNull(entity.getEquipment()).getItemInOffHand();
-        };
-    }
-
-    public enum getType {
-        boots, leggings, chestPlate, helmet, mainHand, offHand
-    }
-
-    boolean CanMove(ItemStack item) {
+    public boolean CanMove(ItemStack item) {
         if (item == null) return true;
         if (item.getType().equals(Material.AIR)) return true;
         return !item.containsEnchantment(Enchantment.BINDING_CURSE);
