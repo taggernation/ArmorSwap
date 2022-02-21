@@ -10,7 +10,6 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -27,13 +26,23 @@ import java.util.Objects;
 
 public class ClickEvent implements Listener {
     String sound = ArmorSwap.getPlugin().getConfig().getString("Sound");
+    private final boolean armorStandSwap;
+    private final boolean itemFrameSwap;
+    private final boolean mainHandSwap;
+
+    public ClickEvent() {
+        this.armorStandSwap = new Data().getBoolean(DataType.ARMOR_STAND_SWAP);
+        this.itemFrameSwap = new Data().getBoolean(DataType.ITEM_FRAME_SWAP);
+        this.mainHandSwap = new Data().getBoolean(DataType.MAIN_HAND_SWAP);
+    }
+
+
     //
     // ARMOR STAND EVENTS STARTS HERE
     //
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onArmorStandRightClickEvent(PlayerInteractAtEntityEvent event) {
-        boolean isEnabled = new Data().getBoolean(DataType.Armor_stand_swap);
-        if (isEnabled && !event.isCancelled()) {
+        if (armorStandSwap && !event.isCancelled()) {
             Player player = event.getPlayer();
 
             int value = getArmorSwapEnabled(player);
@@ -55,17 +64,14 @@ public class ClickEvent implements Listener {
                     // armor stand set armor
                     for (DataType dataType : DataType.values()) {
                         if (!stand.hasArms()) {
-                            if (dataType.equals(DataType.Player_MainHand) || dataType.equals(DataType.Player_OffHand) || dataType.equals(DataType.Stand_OffHand) ) continue;
+                            if (dataType.equals(DataType.PLAYER_MAIN_HAND) || dataType.equals(DataType.PLAYER_OFF_HAND) || dataType.equals(DataType.STAND_OFF_HAND) ) continue;
                         }
                         if (PlayerData.canMove(dataType, map)) {
                             PlayerData.setEquipment(dataType, stand, map);
                             PlayerData.setEquipment(dataType ,player, map);
-
                         }
                     }
-
                     player.playSound(player.getLocation(), Sound.valueOf(sound), 1.0F, 1.0F);
-
                 }
             }
         }
@@ -77,10 +83,9 @@ public class ClickEvent implements Listener {
     //
     // ITEM FRAME EVENT STARTS HERE
     //
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onItemFrameRightClickEvent(PlayerInteractEntityEvent event) {
-        boolean isEnabled = new Data().getBoolean(DataType.Item_frame_swap);
-        if (isEnabled && !event.isCancelled()) {
+        if (itemFrameSwap && !event.isCancelled()) {
             Player player = event.getPlayer();
             int value = getArmorSwapEnabled(player);
             if (value == 1) {
@@ -134,8 +139,7 @@ public class ClickEvent implements Listener {
     //
     @EventHandler
     public void onArmorRightClickEvent(PlayerInteractEvent event) {
-        boolean isEnabled = new Data().getBoolean(DataType.Main_hand_swap);
-        if (isEnabled) {
+        if (mainHandSwap) {
             Player player = event.getPlayer();
             int value = getArmorSwapEnabled(player);
             if (value == 1) {
