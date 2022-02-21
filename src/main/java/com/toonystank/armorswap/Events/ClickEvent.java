@@ -2,6 +2,9 @@ package com.toonystank.armorswap.Events;
 
 import com.toonystank.armorswap.ArmorSwap;
 import com.toonystank.armorswap.utils.Clicked;
+import com.toonystank.armorswap.utils.Data;
+import com.toonystank.armorswap.utils.DataType;
+import com.toonystank.armorswap.utils.PlayerData;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -19,17 +22,17 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.Map;
 import java.util.Objects;
 
 public class ClickEvent implements Listener {
     String sound = ArmorSwap.getPlugin().getConfig().getString("Sound");
-
     //
     // ARMOR STAND EVENTS STARTS HERE
     //
     @EventHandler(priority = EventPriority.MONITOR)
     public void onArmorStandRightClickEvent(PlayerInteractAtEntityEvent event) {
-        boolean isEnabled = ArmorSwap.getPlugin().getConfig().getBoolean("Armor_stand_swap");
+        boolean isEnabled = new Data().getBoolean(DataType.Armor_stand_swap);
         if (isEnabled && !event.isCancelled()) {
             Player player = event.getPlayer();
 
@@ -46,45 +49,18 @@ public class ClickEvent implements Listener {
                     if (stand.getEquipment() == null) return;
                     if (!stand.isVisible()) return;
 
-                    ItemStack standBoots = Objects.requireNonNull(stand.getEquipment()).getBoots();
-                    ItemStack standLeggings = Objects.requireNonNull(stand.getEquipment()).getLeggings();
-                    ItemStack standChestplate = Objects.requireNonNull(stand.getEquipment()).getChestplate();
-                    ItemStack standHelmet = Objects.requireNonNull(stand.getEquipment()).getHelmet();
-                    ItemStack standMainHand = Objects.requireNonNull(stand.getEquipment().getItemInMainHand());
-                    ItemStack standOffHand = Objects.requireNonNull(stand.getEquipment().getItemInOffHand());
-                    // player
-
-                    ItemStack playerBoots = Objects.requireNonNull(player.getEquipment()).getBoots();
-                    ItemStack playerLeggings = Objects.requireNonNull(player.getEquipment()).getLeggings();
-                    ItemStack playerChestplate = Objects.requireNonNull(player.getEquipment()).getChestplate();
-                    ItemStack playerHelmet = Objects.requireNonNull(player.getEquipment()).getHelmet();
-                    ItemStack playerMainHand = Objects.requireNonNull(player.getEquipment().getItemInMainHand());
-                    ItemStack playerOffHand = Objects.requireNonNull(player.getEquipment().getItemInOffHand());
+                    Map<DataType, ItemStack> map = new PlayerData().item;
+                    PlayerData.storeData(player, map);
+                    PlayerData.storeData(stand, map);
                     // armor stand set armor
-                    if (CanMove(standBoots) || CanMove(playerBoots)) {
-                        Objects.requireNonNull(stand.getEquipment()).setBoots(playerBoots);
-                        player.getInventory().setBoots(standBoots);
-                    }
-                    if (CanMove(standLeggings) || CanMove(playerLeggings)) {
-                        stand.getEquipment().setLeggings(playerLeggings);
-                        player.getInventory().setLeggings(standLeggings);
-                    }
-                    if (CanMove(standChestplate) || CanMove(playerChestplate)) {
-                        stand.getEquipment().setChestplate(playerChestplate);
-                        player.getInventory().setChestplate(standChestplate);
-                    }
-                    if (CanMove(standHelmet) || CanMove(playerHelmet)) {
-                        stand.getEquipment().setHelmet(playerHelmet);
-                        player.getInventory().setHelmet(standHelmet);
-                    }
-                    if (stand.hasArms()) {
-                        if (CanMove(standMainHand) || CanMove(playerMainHand)) {
-                            stand.getEquipment().setItemInMainHand(playerMainHand);
-                            player.getEquipment().setItemInMainHand(standMainHand);
+                    for (DataType dataType : DataType.values()) {
+                        if (!stand.hasArms()) {
+                            if (dataType.equals(DataType.Player_MainHand) || dataType.equals(DataType.Player_OffHand) || dataType.equals(DataType.Stand_OffHand) ) continue;
                         }
-                        if (CanMove(standOffHand) || CanMove(playerOffHand)) {
-                            stand.getEquipment().setItemInOffHand(playerOffHand);
-                            player.getEquipment().setItemInOffHand(standOffHand);
+                        if (PlayerData.canMove(dataType, map) || PlayerData.canMove(dataType, map)) {
+                            PlayerData.setEquipment(dataType, stand, map);
+                            PlayerData.setEquipment(dataType ,player, map);
+
                         }
                     }
 
@@ -95,12 +71,6 @@ public class ClickEvent implements Listener {
         }
     }
 
-    public boolean CanMove(ItemStack item) {
-        if (item == null) return true;
-        if (item.getType().equals(Material.AIR)) return true;
-        return !item.containsEnchantment(Enchantment.BINDING_CURSE);
-    }
-
     //
     // ARMOR STAND EVENT ENDS HERE
     //
@@ -109,7 +79,7 @@ public class ClickEvent implements Listener {
     //
     @EventHandler
     public void onItemFrameRightClickEvent(PlayerInteractEntityEvent event) {
-        boolean isEnabled = ArmorSwap.getPlugin().getConfig().getBoolean("Item_frame_swap");
+        boolean isEnabled = new Data().getBoolean(DataType.Item_frame_swap);
         if (isEnabled && !event.isCancelled()) {
             Player player = event.getPlayer();
             int value = getArmorSwapEnabled(player);
@@ -164,21 +134,17 @@ public class ClickEvent implements Listener {
     //
     @EventHandler
     public void onArmorRightClickEvent(PlayerInteractEvent event) {
-        boolean isEnabled = ArmorSwap.getPlugin().getConfig().getBoolean("Main_hand_swap");
+        boolean isEnabled = new Data().getBoolean(DataType.Main_hand_swap);
         if (isEnabled) {
             Player player = event.getPlayer();
             int value = getArmorSwapEnabled(player);
             if (value == 1) {
                 Block block = event.getClickedBlock();
                 if (block != null) {
-                    if (!block.getType().isInteractable()) {
-                        ItemStack Item = player.getInventory().getItemInMainHand();
-                        Clicked.playerItem(player, Item, sound);
-                    }
-                }else {
-                    ItemStack Item = player.getInventory().getItemInMainHand();
-                    Clicked.playerItem(player, Item, sound);
+                    if (!block.getType().isInteractable()) return;
                 }
+                ItemStack Item = player.getInventory().getItemInMainHand();
+                Clicked.playerItem(player, Item, sound);
             }
         }
     }
