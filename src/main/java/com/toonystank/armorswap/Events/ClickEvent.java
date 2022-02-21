@@ -57,7 +57,7 @@ public class ClickEvent implements Listener {
                         if (!stand.hasArms()) {
                             if (dataType.equals(DataType.Player_MainHand) || dataType.equals(DataType.Player_OffHand) || dataType.equals(DataType.Stand_OffHand) ) continue;
                         }
-                        if (PlayerData.canMove(dataType, map) || PlayerData.canMove(dataType, map)) {
+                        if (PlayerData.canMove(dataType, map)) {
                             PlayerData.setEquipment(dataType, stand, map);
                             PlayerData.setEquipment(dataType ,player, map);
 
