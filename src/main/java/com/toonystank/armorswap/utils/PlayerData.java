@@ -12,18 +12,13 @@ import java.util.Objects;
 
 
 public class PlayerData {
-    public final Map<Player, Map<DataType, ItemStack>> player = new HashMap<>();
     public final Map<ArmorStand, Map<DataType, ItemStack>> stand = new HashMap<>();
     public final Map<DataType, ItemStack> item = new HashMap<>();
-    public Map<Player, Map<DataType, ItemStack>> getPlayer() {
-        return player;
-    }
 
     public Map<DataType, ItemStack> getItem() {
         return item;
     }
     public static void addItem(DataType type, Player player, Map<DataType, ItemStack> map) {
-        player.sendMessage("Adding " + type.toString());
         switch (type) {
             case Player_Boots, Player_Leggings, Player_ChestPlate, Player_Helmet, Player_MainHand, Player_OffHand -> map.put(type, getItem(type, player));
         }
@@ -104,7 +99,6 @@ public class PlayerData {
         addItem(DataType.Stand_OffHand, stand, map);
     }
     public static void setEquipment(DataType type, ArmorStand stand, Map<DataType, ItemStack> map) {
-        stand.sendMessage("Equipment: " + type.toString());
         switch (type) {
             case Player_Leggings -> Objects.requireNonNull(stand.getEquipment()).setLeggings(map.get(type));
             case Player_Boots -> Objects.requireNonNull(stand.getEquipment()).setBoots(map.get(type));
