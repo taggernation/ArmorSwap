@@ -5,6 +5,7 @@ api-version: 1.14
 authors: [ Edward ]
 description: Simple Armorswap plugin. Swap armor by right clicking
 website: https://taggernation.com
+softdepend: [WorldGuard, Kingdoms]
 commands:
   Armorswap:
     description: Enable or disable armor swapping
