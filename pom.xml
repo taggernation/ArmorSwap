@@ -6,7 +6,7 @@
 
     <groupId>com.toonystank</groupId>
     <artifactId>ArmorSwap</artifactId>
-    <version>1.5.2</version>
+    <version>1.5.4</version>
     <packaging>jar</packaging>
 
     <name>ArmorSwap</name>
