@@ -10,6 +10,7 @@ import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -20,13 +21,13 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Objects;
 
-public class clickEvents implements Listener {
+public class ClickEvent implements Listener {
     String sound = ArmorSwap.getPlugin().getConfig().getString("Sound");
 
     //
     // ARMOR STAND EVENTS STARTS HERE
     //
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onArmorStandRightClickEvent(PlayerInteractAtEntityEvent event) {
         boolean isEnabled = ArmorSwap.getPlugin().getConfig().getBoolean("Armor_stand_swap");
         if (isEnabled && !event.isCancelled()) {

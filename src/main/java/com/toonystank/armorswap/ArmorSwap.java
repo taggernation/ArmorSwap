@@ -36,7 +36,7 @@ public final class ArmorSwap extends JavaPlugin {
         setPlugin(this);
         // Events
         getServer().getPluginManager().registerEvents(new onJoin(), this);
-        getServer().getPluginManager().registerEvents(new clickEvents(), this);
+        getServer().getPluginManager().registerEvents(new ClickEvent(), this);
 
         // Commands
         Objects.requireNonNull(getCommand("Armorswap")).setExecutor(new EnableSwap());
