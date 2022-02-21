@@ -12,7 +12,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 
 
-public class onJoin implements Listener {
+public class OnJoin implements Listener {
 
 
     @EventHandler

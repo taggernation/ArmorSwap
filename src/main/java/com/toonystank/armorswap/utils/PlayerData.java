@@ -12,25 +12,28 @@ import java.util.Objects;
 
 
 public class PlayerData {
-    public final Map<ArmorStand, Map<DataType, ItemStack>> stand = new HashMap<>();
-    public final Map<DataType, ItemStack> item = new HashMap<>();
 
+    public Map<DataType, ItemStack> item;
+
+    public PlayerData() {
+        this.item = new HashMap<>();
+    }
     public Map<DataType, ItemStack> getItem() {
         return item;
     }
     public static void addItem(DataType type, Player player, Map<DataType, ItemStack> map) {
         switch (type) {
-            case Player_Boots, Player_Leggings, Player_ChestPlate, Player_Helmet, Player_MainHand, Player_OffHand -> map.put(type, getItem(type, player));
+            case PLAYER_BOOTS, PLAYER_LEGGINGS, PLAYER_CHEST_PLATE, PLAYER_HELMET, PLAYER_MAIN_HAND, PLAYER_OFF_HAND -> map.put(type, getItem(type, player));
         }
     }
     public static void addItem(DataType type, ArmorStand stand, Map<DataType, ItemStack> map) {
         switch (type) {
-            case Stand_Boots, Stand_Leggings, Stand_ChestPlate, Stand_Helmet, Stand_MainHand, Stand_OffHand -> map.put(type, getItem(type, stand));
+            case STAND_BOOTS, STAND_LEGGINGS, STAND_CHEST_PLATE, STAND_HELMET, STAND_MAIN_HAND, STAND_OFF_HAND -> map.put(type, getItem(type, stand));
         }
     }
     public static ItemStack getMapItem(DataType type, Map<DataType, ItemStack> map) {
         switch (type) {
-            case Player_Boots, Player_Leggings, Player_Helmet, Player_ChestPlate, Stand_Boots, Stand_Leggings, Stand_ChestPlate, Stand_Helmet, Stand_OffHand, Stand_MainHand, Player_MainHand, Player_OffHand -> {
+            case PLAYER_BOOTS, PLAYER_LEGGINGS, PLAYER_HELMET, PLAYER_CHEST_PLATE, STAND_BOOTS, STAND_LEGGINGS, STAND_CHEST_PLATE, STAND_HELMET, STAND_OFF_HAND, STAND_MAIN_HAND, PLAYER_MAIN_HAND, PLAYER_OFF_HAND -> {
                 return map.get(type);
             }
         }
@@ -38,22 +41,22 @@ public class PlayerData {
     }
     public static ItemStack getItem(DataType type, Player player) {
         switch (type) {
-            case Player_Boots -> {
+            case PLAYER_BOOTS -> {
                 return Objects.requireNonNull(player.getEquipment()).getBoots();
             }
-            case Player_Leggings -> {
+            case PLAYER_LEGGINGS -> {
                 return Objects.requireNonNull(player.getEquipment()).getLeggings();
             }
-            case Player_ChestPlate -> {
+            case PLAYER_CHEST_PLATE -> {
                 return Objects.requireNonNull(player.getEquipment()).getChestplate();
             }
-            case Player_Helmet -> {
+            case PLAYER_HELMET -> {
                 return Objects.requireNonNull(player.getEquipment()).getHelmet();
             }
-            case Player_MainHand -> {
+            case PLAYER_MAIN_HAND -> {
                 return Objects.requireNonNull(player.getEquipment()).getItemInMainHand();
             }
-            case Player_OffHand -> {
+            case PLAYER_OFF_HAND -> {
                 return Objects.requireNonNull(player.getEquipment()).getItemInOffHand();
             }
         }
@@ -61,61 +64,61 @@ public class PlayerData {
     }
     public static ItemStack getItem(DataType type, ArmorStand stand) {
         switch (type) {
-            case Stand_Boots -> {
+            case STAND_BOOTS -> {
                 return Objects.requireNonNull(stand.getEquipment()).getBoots();
             }
-            case Stand_Leggings -> {
+            case STAND_LEGGINGS -> {
                 return Objects.requireNonNull(stand.getEquipment()).getLeggings();
             }
-            case Stand_ChestPlate -> {
+            case STAND_CHEST_PLATE -> {
                 return Objects.requireNonNull(stand.getEquipment()).getChestplate();
             }
-            case Stand_Helmet -> {
+            case STAND_HELMET -> {
                 return Objects.requireNonNull(stand.getEquipment()).getHelmet();
             }
-            case Stand_MainHand -> {
+            case STAND_MAIN_HAND -> {
                 return Objects.requireNonNull(stand.getEquipment()).getItemInMainHand();
             }
-            case Stand_OffHand -> {
+            case STAND_OFF_HAND -> {
                 return Objects.requireNonNull(stand.getEquipment()).getItemInOffHand();
             }
         }
         return null;
     }
     public static void storeData(Player player, Map<DataType, ItemStack> map) {
-        addItem(DataType.Player_Boots, player, map);
-        addItem(DataType.Player_Leggings, player, map);
-        addItem(DataType.Player_ChestPlate, player, map);
-        addItem(DataType.Player_Helmet, player, map);
-        addItem(DataType.Player_MainHand, player, map);
-        addItem(DataType.Player_OffHand, player, map);
+        addItem(DataType.PLAYER_BOOTS, player, map);
+        addItem(DataType.PLAYER_LEGGINGS, player, map);
+        addItem(DataType.PLAYER_CHEST_PLATE, player, map);
+        addItem(DataType.PLAYER_HELMET, player, map);
+        addItem(DataType.PLAYER_MAIN_HAND, player, map);
+        addItem(DataType.PLAYER_OFF_HAND, player, map);
     }
     public static void storeData(ArmorStand stand, Map<DataType, ItemStack> map) {
-        addItem(DataType.Stand_Boots, stand, map);
-        addItem(DataType.Stand_Leggings, stand, map);
-        addItem(DataType.Stand_ChestPlate, stand, map);
-        addItem(DataType.Stand_Helmet, stand, map);
-        addItem(DataType.Stand_MainHand, stand, map);
-        addItem(DataType.Stand_OffHand, stand, map);
+        addItem(DataType.STAND_BOOTS, stand, map);
+        addItem(DataType.STAND_LEGGINGS, stand, map);
+        addItem(DataType.STAND_CHEST_PLATE, stand, map);
+        addItem(DataType.STAND_HELMET, stand, map);
+        addItem(DataType.STAND_MAIN_HAND, stand, map);
+        addItem(DataType.STAND_OFF_HAND, stand, map);
     }
     public static void setEquipment(DataType type, ArmorStand stand, Map<DataType, ItemStack> map) {
         switch (type) {
-            case Player_Leggings -> Objects.requireNonNull(stand.getEquipment()).setLeggings(map.get(type));
-            case Player_Boots -> Objects.requireNonNull(stand.getEquipment()).setBoots(map.get(type));
-            case Player_ChestPlate -> Objects.requireNonNull(stand.getEquipment()).setChestplate(map.get(type));
-            case Player_Helmet -> Objects.requireNonNull(stand.getEquipment()).setHelmet(map.get(type));
-            case Player_MainHand -> Objects.requireNonNull(stand.getEquipment()).setItemInMainHand(map.get(type));
-            case Player_OffHand -> Objects.requireNonNull(stand.getEquipment()).setItemInOffHand(map.get(type));
+            case PLAYER_LEGGINGS -> Objects.requireNonNull(stand.getEquipment()).setLeggings(map.get(type));
+            case PLAYER_BOOTS -> Objects.requireNonNull(stand.getEquipment()).setBoots(map.get(type));
+            case PLAYER_CHEST_PLATE -> Objects.requireNonNull(stand.getEquipment()).setChestplate(map.get(type));
+            case PLAYER_HELMET -> Objects.requireNonNull(stand.getEquipment()).setHelmet(map.get(type));
+            case PLAYER_MAIN_HAND -> Objects.requireNonNull(stand.getEquipment()).setItemInMainHand(map.get(type));
+            case PLAYER_OFF_HAND -> Objects.requireNonNull(stand.getEquipment()).setItemInOffHand(map.get(type));
         }
     }
     public static void setEquipment(DataType type, Player player, Map<DataType, ItemStack> map) {
         switch (type) {
-            case Stand_Leggings -> Objects.requireNonNull(player.getEquipment()).setLeggings(map.get(type));
-            case Stand_Boots -> Objects.requireNonNull(player.getEquipment()).setBoots(map.get(type));
-            case Stand_ChestPlate -> Objects.requireNonNull(player.getEquipment()).setChestplate(map.get(type));
-            case Stand_Helmet -> Objects.requireNonNull(player.getEquipment()).setHelmet(map.get(type));
-            case Stand_MainHand -> Objects.requireNonNull(player.getEquipment()).setItemInMainHand(map.get(type));
-            case Stand_OffHand -> Objects.requireNonNull(player.getEquipment()).setItemInOffHand(map.get(type));
+            case STAND_LEGGINGS -> Objects.requireNonNull(player.getEquipment()).setLeggings(map.get(type));
+            case STAND_BOOTS -> Objects.requireNonNull(player.getEquipment()).setBoots(map.get(type));
+            case STAND_CHEST_PLATE -> Objects.requireNonNull(player.getEquipment()).setChestplate(map.get(type));
+            case STAND_HELMET -> Objects.requireNonNull(player.getEquipment()).setHelmet(map.get(type));
+            case STAND_MAIN_HAND -> Objects.requireNonNull(player.getEquipment()).setItemInMainHand(map.get(type));
+            case STAND_OFF_HAND -> Objects.requireNonNull(player.getEquipment()).setItemInOffHand(map.get(type));
         }
     }
     public static boolean canMove(DataType type, Map<DataType, ItemStack> map) {

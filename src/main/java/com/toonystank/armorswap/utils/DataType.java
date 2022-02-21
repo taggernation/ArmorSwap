@@ -2,19 +2,19 @@ package com.toonystank.armorswap.utils;
 
 public enum DataType {
 
-    Armor_stand_swap,
-    Item_frame_swap,
-    Main_hand_swap,
-    Player_Boots,
-    Player_Leggings,
-    Player_ChestPlate,
-    Player_Helmet,
-    Stand_Boots,
-    Stand_Leggings,
-    Stand_ChestPlate,
-    Stand_Helmet,
-    Player_MainHand,
-    Player_OffHand,
-    Stand_MainHand,
-    Stand_OffHand
+    ARMOR_STAND_SWAP,
+    ITEM_FRAME_SWAP,
+    MAIN_HAND_SWAP,
+    PLAYER_BOOTS,
+    PLAYER_LEGGINGS,
+    PLAYER_CHEST_PLATE,
+    PLAYER_HELMET,
+    STAND_BOOTS,
+    STAND_LEGGINGS,
+    STAND_CHEST_PLATE,
+    STAND_HELMET,
+    PLAYER_MAIN_HAND,
+    PLAYER_OFF_HAND,
+    STAND_MAIN_HAND,
+    STAND_OFF_HAND
 }
