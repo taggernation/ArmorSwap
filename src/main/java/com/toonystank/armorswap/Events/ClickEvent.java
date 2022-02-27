@@ -62,14 +62,22 @@ public class ClickEvent implements Listener {
                 PlayerData.storeData(stand, map);
                 // armor stand set armor
                 for (DataType dataType : DataType.values()) {
+                    if (dataType.equals(DataType.ARMOR_STAND_SWAP)
+                            || dataType.equals(DataType.ITEM_FRAME_SWAP)
+                            || dataType.equals(DataType.MAIN_HAND_SWAP))
+                        continue;
                     if (!stand.hasArms()) {
-                        if (dataType.equals(DataType.PLAYER_MAIN_HAND) || dataType.equals(DataType.PLAYER_OFF_HAND) || dataType.equals(DataType.STAND_OFF_HAND))
+                        if (dataType.equals(DataType.PLAYER_MAIN_HAND)
+                                || dataType.equals(DataType.STAND_MAIN_HAND)
+                                || dataType.equals(DataType.PLAYER_OFF_HAND)
+                                || dataType.equals(DataType.STAND_OFF_HAND))
                             continue;
                     }
                     if (PlayerData.canMove(dataType, map)) {
                         PlayerData.setEquipment(dataType, stand, map);
                         PlayerData.setEquipment(dataType, player, map);
                     }
+
                 }
                 player.playSound(player.getLocation(), Sound.valueOf(sound), 1.0F, 1.0F);
             }
