@@ -46,33 +46,32 @@ public class ClickEvent implements Listener {
             Player player = event.getPlayer();
 
             int value = getArmorSwapEnabled(player);
-            if (value == 1) {
+            if ((value != 1) && (!player.isSneaking())) return;
 
-                if (!player.isSneaking()) return;
-                Entity entity = event.getRightClicked();
+            Entity entity = event.getRightClicked();
 
-                if (entity.getType().equals(EntityType.ARMOR_STAND)) {
+            if (entity.getType().equals(EntityType.ARMOR_STAND)) {
 
-                    event.setCancelled(true);
-                    ArmorStand stand = (ArmorStand) entity;
-                    if (stand.getEquipment() == null) return;
-                    if (!stand.isVisible()) return;
+                event.setCancelled(true);
+                ArmorStand stand = (ArmorStand) entity;
+                if (stand.getEquipment() == null) return;
+                if (!stand.isVisible()) return;
 
-                    Map<DataType, ItemStack> map = new PlayerData().item;
-                    PlayerData.storeData(player, map);
-                    PlayerData.storeData(stand, map);
-                    // armor stand set armor
-                    for (DataType dataType : DataType.values()) {
-                        if (!stand.hasArms()) {
-                            if (dataType.equals(DataType.PLAYER_MAIN_HAND) || dataType.equals(DataType.PLAYER_OFF_HAND) || dataType.equals(DataType.STAND_OFF_HAND) ) continue;
-                        }
-                        if (PlayerData.canMove(dataType, map)) {
-                            PlayerData.setEquipment(dataType, stand, map);
-                            PlayerData.setEquipment(dataType ,player, map);
-                        }
+                Map<DataType, ItemStack> map = new PlayerData().item;
+                PlayerData.storeData(player, map);
+                PlayerData.storeData(stand, map);
+                // armor stand set armor
+                for (DataType dataType : DataType.values()) {
+                    if (!stand.hasArms()) {
+                        if (dataType.equals(DataType.PLAYER_MAIN_HAND) || dataType.equals(DataType.PLAYER_OFF_HAND) || dataType.equals(DataType.STAND_OFF_HAND))
+                            continue;
                     }
-                    player.playSound(player.getLocation(), Sound.valueOf(sound), 1.0F, 1.0F);
+                    if (PlayerData.canMove(dataType, map)) {
+                        PlayerData.setEquipment(dataType, stand, map);
+                        PlayerData.setEquipment(dataType, player, map);
+                    }
                 }
+                player.playSound(player.getLocation(), Sound.valueOf(sound), 1.0F, 1.0F);
             }
         }
     }
@@ -88,37 +87,35 @@ public class ClickEvent implements Listener {
         if (itemFrameSwap && !event.isCancelled()) {
             Player player = event.getPlayer();
             int value = getArmorSwapEnabled(player);
-            if (value == 1) {
-                if (!player.isSneaking()) return;
-                Entity entity = event.getRightClicked();
-                // Item frame or glow item frame
-                if (entity.getType().equals(EntityType.ITEM_FRAME)
-                        ||
-                        entity.getType().equals(EntityType.GLOW_ITEM_FRAME)) {
-                    event.setCancelled(true);
-                    ItemFrame clickedFrame = (ItemFrame) entity;
-                    ItemStack playerItem = player.getInventory().getItemInMainHand();
-                    ItemStack itemOnFrame = clickedFrame.getItem();
+            if ((value != 1) && (!player.isSneaking())) return;
+            Entity entity = event.getRightClicked();
+            // Item frame or glow item frame
+            if (entity.getType().equals(EntityType.ITEM_FRAME)
+                    ||
+                    entity.getType().equals(EntityType.GLOW_ITEM_FRAME)) {
+                event.setCancelled(true);
+                ItemFrame clickedFrame = (ItemFrame) entity;
+                ItemStack playerItem = player.getInventory().getItemInMainHand();
+                ItemStack itemOnFrame = clickedFrame.getItem();
 
-                    if (playerItem.getAmount() == 1) {
-                        clickedFrame.setItem(playerItem);
-                        player.getInventory().setItemInMainHand(itemOnFrame);
-                    } else {
-                        if (!player.getInventory().contains(Material.AIR)) {
-                            ItemStack[] items = player.getInventory().getContents();
-                            for (ItemStack item : items) {
-                                if (item.getType() == itemOnFrame.getType()) {
-                                    if (item.getAmount() <= item.getMaxStackSize()) {
-                                        giveItem(playerItem, itemOnFrame, clickedFrame, player);
-                                        return;
-                                    }
+                if (playerItem.getAmount() == 1) {
+                    clickedFrame.setItem(playerItem);
+                    player.getInventory().setItemInMainHand(itemOnFrame);
+                } else {
+                    if (!player.getInventory().contains(Material.AIR)) {
+                        ItemStack[] items = player.getInventory().getContents();
+                        for (ItemStack item : items) {
+                            if (item.getType() == itemOnFrame.getType()) {
+                                if (item.getAmount() <= item.getMaxStackSize()) {
+                                    giveItem(playerItem, itemOnFrame, clickedFrame, player);
+                                    return;
                                 }
                             }
-                            player.sendMessage(ChatColor.RED + "Inventory full");
-                            return;
                         }
-                        giveItem(playerItem, itemOnFrame, clickedFrame, player);
+                        player.sendMessage(ChatColor.RED + "Inventory full");
+                        return;
                     }
+                    giveItem(playerItem, itemOnFrame, clickedFrame, player);
                 }
             }
         }
