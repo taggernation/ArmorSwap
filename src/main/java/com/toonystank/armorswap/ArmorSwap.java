@@ -16,6 +16,7 @@ public final class ArmorSwap extends JavaPlugin {
     }
 
     private static ArmorSwap plugin;
+    private boolean isOnPaper = false;
 
     public static void setPlugin(ArmorSwap plugin) {
         ArmorSwap.plugin = plugin;
@@ -37,6 +38,21 @@ public final class ArmorSwap extends JavaPlugin {
         // Events
         getServer().getPluginManager().registerEvents(new OnJoin(), this);
         getServer().getPluginManager().registerEvents(new ClickEvent(), this);
+//        Checks if server is running on Paper or not
+        try {
+            Class.forName("com.destroystokyo.paper");
+            isOnPaper = true;
+        } catch (ClassNotFoundException ignored) {
+            isOnPaper = false;
+        }
+//        Initializing Command manager
+        if (isOnPaper) {
+            PaperCommandManager pcm = new PaperCommandManager(plugin);
+            pcm.registerCommand(new CommandManager());
+        } else {
+            BukkitCommandManager bcm = new BukkitCommandManager(plugin);
+            bcm.registerCommand(new CommandManager());
+        }
 
         // Commands
         Objects.requireNonNull(getCommand("Armorswap")).setExecutor(new EnableSwap());
