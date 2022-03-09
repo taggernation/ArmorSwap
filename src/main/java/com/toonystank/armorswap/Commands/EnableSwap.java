@@ -15,6 +15,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Objects;
 
+@Deprecated
 public class EnableSwap implements CommandExecutor {
 
     @Override

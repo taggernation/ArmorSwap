@@ -1,13 +1,14 @@
 package com.toonystank.armorswap;
 
-import com.toonystank.armorswap.Commands.EnableSwap;
-import com.toonystank.armorswap.Events.*;
+import co.aikar.commands.BukkitCommandManager;
+import co.aikar.commands.PaperCommandManager;
+import com.toonystank.armorswap.Commands.CommandManager;
+import com.toonystank.armorswap.Events.ClickEvent;
+import com.toonystank.armorswap.Events.OnJoin;
 import com.toonystank.armorswap.utils.Metrics;
 import com.toonystank.armorswap.utils.UpdateChecker;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.Objects;
 
 public final class ArmorSwap extends JavaPlugin {
 
@@ -55,7 +56,7 @@ public final class ArmorSwap extends JavaPlugin {
         }
 
         // Commands
-        Objects.requireNonNull(getCommand("Armorswap")).setExecutor(new EnableSwap());
+//        Objects.requireNonNull(getCommand("Armorswap")).setExecutor(new EnableSwap());
 
         // Config
         getConfig().options().copyDefaults();
