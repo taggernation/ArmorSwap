@@ -5,10 +5,7 @@ import com.toonystank.armorswap.utils.Clicked;
 import com.toonystank.armorswap.utils.Data;
 import com.toonystank.armorswap.utils.DataType;
 import com.toonystank.armorswap.utils.PlayerData;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -21,6 +18,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -95,7 +93,8 @@ public class ClickEvent implements Listener {
         if (itemFrameSwap && !event.isCancelled()) {
             Player player = event.getPlayer();
             int value = getArmorSwapEnabled(player);
-            if ((value != 1) && (!player.isSneaking())) return;
+            if (!player.isSneaking()) return;
+            if ((value != 1)) return;
             Entity entity = event.getRightClicked();
             // Item frame or glow item frame
             if (entity.getType().equals(EntityType.ITEM_FRAME)
@@ -106,13 +105,17 @@ public class ClickEvent implements Listener {
                 ItemStack playerItem = player.getInventory().getItemInMainHand();
                 ItemStack itemOnFrame = clickedFrame.getItem();
 
-                if (playerItem.getAmount() == 1) {
+                if (playerItem.getAmount() == 1 && itemOnFrame.getAmount() == 1) {
                     clickedFrame.setItem(playerItem);
                     player.getInventory().setItemInMainHand(itemOnFrame);
                 } else {
                     if (!player.getInventory().contains(Material.AIR)) {
                         ItemStack[] items = player.getInventory().getContents();
                         for (ItemStack item : items) {
+                            if (item == null) {
+                                giveItem(playerItem, itemOnFrame, clickedFrame, player);
+                                return;
+                            }
                             if (item.getType() == itemOnFrame.getType()) {
                                 if (item.getAmount() <= item.getMaxStackSize()) {
                                     giveItem(playerItem, itemOnFrame, clickedFrame, player);
@@ -120,10 +123,8 @@ public class ClickEvent implements Listener {
                                 }
                             }
                         }
-                        player.sendMessage(ChatColor.RED + "Inventory full");
-                        return;
                     }
-                    giveItem(playerItem, itemOnFrame, clickedFrame, player);
+                    player.sendMessage(ChatColor.RED + "Inventory full");
                 }
             }
         }
