@@ -1,11 +1,7 @@
 package com.toonystank.armorswap.Commands;
 
 import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.CommandAlias;
-import co.aikar.commands.annotation.CommandPermission;
-import co.aikar.commands.annotation.Default;
-import co.aikar.commands.annotation.Description;
-import co.aikar.commands.annotation.Subcommand;
+import co.aikar.commands.annotation.*;
 import com.toonystank.armorswap.ArmorSwap;
 import com.toonystank.armorswap.utils.getConfigMessages;
 import org.bukkit.Bukkit;

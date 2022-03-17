@@ -38,13 +38,15 @@ public class ClickEvent implements Listener {
     //
     // ARMOR STAND EVENTS STARTS HERE
     //
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onArmorStandRightClickEvent(PlayerInteractAtEntityEvent event) {
-        if (armorStandSwap && !event.isCancelled()) {
+        if (event.isCancelled()) return;
+        if (armorStandSwap) {
             Player player = event.getPlayer();
 
             int value = getArmorSwapEnabled(player);
-            if ((value != 1) && (!player.isSneaking())) return;
+            if (!player.isSneaking()) return;
+            if (value != 1)  return;
 
             Entity entity = event.getRightClicked();
 
@@ -88,13 +90,14 @@ public class ClickEvent implements Listener {
     //
     // ITEM FRAME EVENT STARTS HERE
     //
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onItemFrameRightClickEvent(PlayerInteractEntityEvent event) {
-        if (itemFrameSwap && !event.isCancelled()) {
+        if (event.isCancelled()) return;
+        if (itemFrameSwap) {
             Player player = event.getPlayer();
             int value = getArmorSwapEnabled(player);
             if (!player.isSneaking()) return;
-            if ((value != 1)) return;
+            if (value != 1)  return;
             Entity entity = event.getRightClicked();
             // Item frame or glow item frame
             if (entity.getType().equals(EntityType.ITEM_FRAME)
