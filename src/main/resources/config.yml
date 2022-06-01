@@ -1,12 +1,27 @@
 # Enable/disable swapping item to armor stand
 Armor_stand_swap: true
+#Permission to use swapping items to armor stand
+Armor_Stand_Swap_Permission: "armorswap.swap.armorstand"
+
 # Enable/disable swapping item to armor stand
 Main_hand_swap: true
+#Permission to use swapping items to main hand
+Main_Hand_Swap_Permission: "armorswap.swap.mainhand"
+
 # Enable/Disable swapping item to item frames
 Item_frame_swap: true
+#Permission to use swapping items to item frames
+Item_Frame_Swap_Permission: "armorswap.swap.itemframe"
+
 #sound to play on swap
 Sound: ITEM_ARMOR_EQUIP_TURTLE
+
+#Bypass curse of binding
 Bypass_enchantment: false
+
+#Permission to bypass enchantment
+Bypass_permission: "armorswap.bypass.enchantment"
+
 #----------------------------------------------------------------------------------------------------------------
 #
 #				                 Language
@@ -19,3 +34,6 @@ Enable: "&bArmor swap is now enabled for you"
 Disable: "&bArmor swap is now disabled for you"
 # on wrong usage
 usageError: "&bUse &7/armorswap&b to enable armor swap"
+
+#DO NOT TOUCH
+Version: 1.5.9

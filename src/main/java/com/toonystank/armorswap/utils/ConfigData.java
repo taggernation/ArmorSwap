@@ -1,6 +1,5 @@
 package com.toonystank.armorswap.utils;
 
-import com.toonystank.armorswap.enums.ConfigDataType;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
 
@@ -13,11 +12,8 @@ public class ConfigData extends ConfigManager{
         super(plugin, "config.yml", false, true);
         this.plugin = plugin;
     }
-    public String getMessage(ConfigDataType type) {
-        return ChatColor.translateAlternateColorCodes('&',getString(type.getName()));
-    }
-    public boolean getBoolean(ConfigDataType type) {
-        return getBoolean(type.getName());
+    public String getMessage(String path){
+        return ChatColor.translateAlternateColorCodes('&',getString(path));
     }
 }
 
