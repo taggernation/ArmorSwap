@@ -30,8 +30,8 @@ import java.util.List;
 
 public class ConfigManager {
 
-    private final File file;
-    private final FileConfiguration config;
+    private File file;
+    private FileConfiguration config;
     private final Plugin plugin;
 
     /**
@@ -142,22 +142,25 @@ public class ConfigManager {
      * Update the Config with the newer version of the file
      * @param currentVersion String
      * @param versionPath String
-     * @return boolean true if updated
      * @throws IOException IOException
      * @throws InvalidConfigurationException InvalidConfigurationException
      */
-    public boolean updateConfig(@NotNull String currentVersion, @NotNull String versionPath) throws IOException, InvalidConfigurationException {
-        String version = this.getString(versionPath);
-        if (version.equals(currentVersion)) {
+    public void updateConfig(@NotNull String currentVersion, @NotNull String versionPath) throws IOException, InvalidConfigurationException {
+        String version = null;
+        try {
+            version = this.getString(versionPath);
+        }catch (NullPointerException e) {
+            plugin.getLogger().info("No version found in config.yml... Creating new version of the config");
+        }
+        if (version == null || !version.equals(currentVersion)) {
             File newFile = new File(file.getParentFile(), "old_" + version + "_" + getFile().getName());
             File oldFile = getFile();
             if (oldFile.renameTo(newFile)) {
+                this.file = new File(plugin.getDataFolder(), getFile().getName());
                 plugin.saveResource(getFile().getName(), true);
-                reload();
-                return true;
+                this.config = YamlConfiguration.loadConfiguration(this.file);
             }
         }
-        return false;
     }
 
 
@@ -238,6 +241,9 @@ public class ConfigManager {
      */
     public String getString(String path) {
         return config.getString(path);
+    }
+    public void setFile(File file) {
+        this.file = file;
     }
 
 }

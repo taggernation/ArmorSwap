@@ -5,11 +5,14 @@ import co.aikar.commands.PaperCommandManager;
 import com.toonystank.armorswap.Commands.CommandManager;
 import com.toonystank.armorswap.Events.ClickEvent;
 import com.toonystank.armorswap.Events.OnJoin;
+import com.toonystank.armorswap.enums.ConfigDataType;
 import com.toonystank.armorswap.utils.ConfigData;
 import com.toonystank.armorswap.utils.ConfigManager;
 import com.toonystank.armorswap.utils.Metrics;
 import com.toonystank.armorswap.utils.UpdateChecker;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
@@ -34,7 +37,9 @@ public final class ArmorSwap extends JavaPlugin {
     public void onEnable() {
         try {
             configData = new ConfigData(this);
-        } catch (IOException e) {
+            Bukkit.getLogger().info(this.getDescription().getVersion());
+            configData.updateConfig(this.getDescription().getVersion(), ConfigDataType.VERSION.getName());
+        } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }
         new UpdateChecker(this, 97332).getVersion(version -> {
