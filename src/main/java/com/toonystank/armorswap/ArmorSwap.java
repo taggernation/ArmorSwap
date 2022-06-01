@@ -5,10 +5,14 @@ import co.aikar.commands.PaperCommandManager;
 import com.toonystank.armorswap.Commands.CommandManager;
 import com.toonystank.armorswap.Events.ClickEvent;
 import com.toonystank.armorswap.Events.OnJoin;
+import com.toonystank.armorswap.utils.ConfigData;
+import com.toonystank.armorswap.utils.ConfigManager;
 import com.toonystank.armorswap.utils.Metrics;
 import com.toonystank.armorswap.utils.UpdateChecker;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.IOException;
 
 public final class ArmorSwap extends JavaPlugin {
 
@@ -17,7 +21,10 @@ public final class ArmorSwap extends JavaPlugin {
     }
 
     private static ArmorSwap plugin;
-    private boolean isOnPaper = false;
+    private ConfigData configData;
+    public ConfigData getConfigData() {
+        return configData;
+    }
 
     public static void setPlugin(ArmorSwap plugin) {
         ArmorSwap.plugin = plugin;
@@ -25,6 +32,11 @@ public final class ArmorSwap extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        try {
+            configData = new ConfigData(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         new UpdateChecker(this, 97332).getVersion(version -> {
             if (this.getDescription().getVersion().equals(version)) {
                 getLogger().info("There is not a new update available.");
@@ -38,29 +50,29 @@ public final class ArmorSwap extends JavaPlugin {
         setPlugin(this);
         // Events
         getServer().getPluginManager().registerEvents(new OnJoin(), this);
-        getServer().getPluginManager().registerEvents(new ClickEvent(), this);
+        try {
+            getServer().getPluginManager().registerEvents(new ClickEvent(configData,this), this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 //        Checks if server is running on Paper or not
+        boolean isOnPaper = false;
         try {
             Class.forName("com.destroystokyo.paper");
             isOnPaper = true;
         } catch (ClassNotFoundException ignored) {
-            isOnPaper = false;
         }
+
 //        Initializing Command manager
         if (isOnPaper) {
-            PaperCommandManager pcm = new PaperCommandManager(plugin);
-            pcm.registerCommand(new CommandManager());
+            PaperCommandManager pcm = new PaperCommandManager(this);
+            pcm.registerCommand(new CommandManager(configData, this));
         } else {
-            BukkitCommandManager bcm = new BukkitCommandManager(plugin);
-            bcm.registerCommand(new CommandManager());
+            BukkitCommandManager bcm = new BukkitCommandManager(this);
+            bcm.registerCommand(new CommandManager(configData, this));
         }
 
-        // Commands
-//        Objects.requireNonNull(getCommand("Armorswap")).setExecutor(new EnableSwap());
-
         // Config
-        getConfig().options().copyDefaults();
-        saveDefaultConfig();
 
         getLogger().info(ChatColor.AQUA + "ArmorSwap " + ChatColor.UNDERLINE + "Successfully loaded.");
     }

@@ -6,6 +6,7 @@ Main_hand_swap: true
 Item_frame_swap: true
 #sound to play on swap
 Sound: ITEM_ARMOR_EQUIP_TURTLE
+Bypass_enchantment: false
 #----------------------------------------------------------------------------------------------------------------
 #
 #				                 Language

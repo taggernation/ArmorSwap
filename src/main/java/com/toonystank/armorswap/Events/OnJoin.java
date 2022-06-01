@@ -1,7 +1,8 @@
 package com.toonystank.armorswap.Events;
 
 import com.toonystank.armorswap.ArmorSwap;
-import com.toonystank.armorswap.utils.getConfigMessages;
+import com.toonystank.armorswap.enums.ConfigDataType;
+import com.toonystank.armorswap.utils.ConfigData;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,12 +17,12 @@ public class OnJoin implements Listener {
 
 
     @EventHandler
-    public void onJoinEvent(PlayerJoinEvent event) {
+    public void onJoinEvent(PlayerJoinEvent event ) {
         Player p = event.getPlayer();
-        Plugin plugin = ArmorSwap.getPlugin();
+        ArmorSwap plugin = ArmorSwap.getPlugin();
         PersistentDataContainer data = p.getPersistentDataContainer();
         if (data.get(new NamespacedKey(plugin, "ArmorSwapEnabled"), PersistentDataType.INTEGER) == null) {
-            getConfigMessages.getEnable(p);
+            p.sendMessage(plugin.getConfigData().getMessage(ConfigDataType.ENABLE));
             data.set(new NamespacedKey(plugin, "ArmorSwapEnabled"), PersistentDataType.INTEGER, 1);
         }
     }

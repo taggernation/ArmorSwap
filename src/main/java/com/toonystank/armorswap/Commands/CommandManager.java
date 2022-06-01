@@ -3,7 +3,8 @@ package com.toonystank.armorswap.Commands;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import com.toonystank.armorswap.ArmorSwap;
-import com.toonystank.armorswap.utils.getConfigMessages;
+import com.toonystank.armorswap.enums.ConfigDataType;
+import com.toonystank.armorswap.utils.ConfigData;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
@@ -13,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.plugin.Plugin;
 
 import java.util.Objects;
 
@@ -20,16 +22,23 @@ import java.util.Objects;
 public class CommandManager extends BaseCommand {
   String sound = Objects.requireNonNull(ArmorSwap.getPlugin().getConfig().getString("Sound"));
 
+  ConfigData configData;
+  Plugin plugin;
+
+  public CommandManager(ConfigData configData, Plugin plugin) {
+    this.configData = configData;
+  }
+
   @Subcommand("reload")
   @CommandPermission("armorswap.command.reload")
   @Description("Reloads ArmorSwap plugin")
   public void onReload(CommandSender sender) {
     if (sender instanceof Player player) {
       ArmorSwap.getPlugin().reloadConfig();
-      player.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfigMessages.getPrefix()) + "" + ChatColor.AQUA + " ArmorSwap is reloaded");
+      player.sendMessage(configData.getMessage(ConfigDataType.PREFIX) + "" + ChatColor.AQUA + " ArmorSwap is reloaded");
     } else {
       ArmorSwap.getPlugin().reloadConfig();
-      Bukkit.getLogger().info(ChatColor.translateAlternateColorCodes('&', getConfigMessages.getPrefix()) + "" + ChatColor.AQUA + " ArmorSwap is reloaded");
+      plugin.getLogger().info(configData.getMessage(ConfigDataType.PREFIX) + "" + ChatColor.AQUA + " ArmorSwap is reloaded");
     }
   }
 
@@ -44,7 +53,7 @@ public class CommandManager extends BaseCommand {
       player.getInventory().setItemInMainHand(itemForHand);
       player.playSound(player.getLocation(), Sound.valueOf(sound), 1.0F, 1.0F);
     } else {
-      Bukkit.getLogger().info(ChatColor.translateAlternateColorCodes('&', getConfigMessages.getPrefix()) + "" + ChatColor.RED + " Must be an player to run this command.");
+      plugin.getLogger().info( configData.getMessage(ConfigDataType.PREFIX)+ "" + ChatColor.RED + " Must be an player to run this command.");
     }
   }
 
@@ -54,7 +63,7 @@ public class CommandManager extends BaseCommand {
     if (sender instanceof Player player) {
       player.sendMessage(ChatColor.AQUA + "" + ChatColor.RESET + "" + ChatColor.STRIKETHROUGH + "|              |" + "\n" + "\n" + ChatColor.YELLOW + "* /Armorswap reload - Reloads the plugin" + "\n" + "* /Armorswap head - Replace player head with holding item" + "\n" + "\n" + ChatColor.AQUA + "" + ChatColor.RESET + "" + "|              |");
     } else {
-      Bukkit.getLogger().info(ChatColor.AQUA + "" + ChatColor.RESET + "" + ChatColor.STRIKETHROUGH + "|              |" + "\n" + "\n" + ChatColor.YELLOW + "* /Armorswap reload - Reloads the plugin" + "\n" + "* /Armorswap head - Replace player head with holding item" + "\n" + "\n" + ChatColor.AQUA + "" + ChatColor.RESET + "" + "|              |");
+      plugin.getLogger().info(ChatColor.AQUA + "" + ChatColor.RESET + "" + ChatColor.STRIKETHROUGH + "|              |" + "\n" + "\n" + ChatColor.YELLOW + "* /Armorswap reload - Reloads the plugin" + "\n" + "* /Armorswap head - Replace player head with holding item" + "\n" + "\n" + ChatColor.AQUA + "" + ChatColor.RESET + "" + "|              |");
     }
   }
 
@@ -71,10 +80,10 @@ public class CommandManager extends BaseCommand {
         try {
           int value = Objects.requireNonNull(data.get(new NamespacedKey(ArmorSwap.getPlugin(), "ArmorSwapEnabled"), PersistentDataType.INTEGER));
           if (value == 1) {
-            getConfigMessages.getDisable(player);
+            player.sendMessage(configData.getMessage(ConfigDataType.DISABLE));
             data.set(new NamespacedKey(ArmorSwap.getPlugin(), "ArmorSwapEnabled"), PersistentDataType.INTEGER, 0);
           }else {
-            getConfigMessages.getEnable(player);
+            configData.getMessage(ConfigDataType.ENABLE);
             data.set(new NamespacedKey(ArmorSwap.getPlugin(), "ArmorSwapEnabled"), PersistentDataType.INTEGER, 1);
           }
         }
@@ -83,7 +92,7 @@ public class CommandManager extends BaseCommand {
         }
       }
     } else {
-      Bukkit.getLogger().info(ChatColor.translateAlternateColorCodes('&', getConfigMessages.getPrefix()) + "" + ChatColor.RED + " Must be an player to run this command.");
+      plugin.getLogger().info(configData.getMessage(ConfigDataType.PREFIX) + "" + ChatColor.RED + " Must be an player to run this command.");
     }
   }
 }
