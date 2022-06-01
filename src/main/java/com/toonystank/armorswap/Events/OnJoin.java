@@ -22,7 +22,7 @@ public class OnJoin implements Listener {
         ArmorSwap plugin = ArmorSwap.getPlugin();
         PersistentDataContainer data = p.getPersistentDataContainer();
         if (data.get(new NamespacedKey(plugin, "ArmorSwapEnabled"), PersistentDataType.INTEGER) == null) {
-            p.sendMessage(plugin.getConfigData().getMessage(ConfigDataType.ENABLE));
+            p.sendMessage(ConfigDataType.ENABLE.getString());
             data.set(new NamespacedKey(plugin, "ArmorSwapEnabled"), PersistentDataType.INTEGER, 1);
         }
     }

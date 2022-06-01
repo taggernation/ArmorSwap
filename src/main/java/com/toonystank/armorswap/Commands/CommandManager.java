@@ -10,12 +10,14 @@ import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 
+import java.io.IOException;
 import java.util.Objects;
 
 @CommandAlias("Armorswap|armorswap|as")
@@ -32,13 +34,13 @@ public class CommandManager extends BaseCommand {
   @Subcommand("reload")
   @CommandPermission("armorswap.command.reload")
   @Description("Reloads ArmorSwap plugin")
-  public void onReload(CommandSender sender) {
+  public void onReload(CommandSender sender) throws IOException, InvalidConfigurationException {
     if (sender instanceof Player player) {
-      ArmorSwap.getPlugin().reloadConfig();
-      player.sendMessage(configData.getMessage(ConfigDataType.PREFIX) + "" + ChatColor.AQUA + " ArmorSwap is reloaded");
+      configData.reload();
+      player.sendMessage(ConfigDataType.PREFIX.getString() + "" + ChatColor.AQUA + " ArmorSwap is reloaded");
     } else {
       ArmorSwap.getPlugin().reloadConfig();
-      plugin.getLogger().info(configData.getMessage(ConfigDataType.PREFIX) + "" + ChatColor.AQUA + " ArmorSwap is reloaded");
+      plugin.getLogger().info(ConfigDataType.PREFIX.getString() + "" + ChatColor.AQUA + " ArmorSwap is reloaded");
     }
   }
 
@@ -53,7 +55,7 @@ public class CommandManager extends BaseCommand {
       player.getInventory().setItemInMainHand(itemForHand);
       player.playSound(player.getLocation(), Sound.valueOf(sound), 1.0F, 1.0F);
     } else {
-      plugin.getLogger().info( configData.getMessage(ConfigDataType.PREFIX)+ "" + ChatColor.RED + " Must be an player to run this command.");
+      plugin.getLogger().info( ConfigDataType.PREFIX.getString() + "" + ChatColor.RED + " Must be an player to run this command.");
     }
   }
 
@@ -80,10 +82,10 @@ public class CommandManager extends BaseCommand {
         try {
           int value = Objects.requireNonNull(data.get(new NamespacedKey(ArmorSwap.getPlugin(), "ArmorSwapEnabled"), PersistentDataType.INTEGER));
           if (value == 1) {
-            player.sendMessage(configData.getMessage(ConfigDataType.DISABLE));
+            player.sendMessage(ConfigDataType.DISABLE.getString());
             data.set(new NamespacedKey(ArmorSwap.getPlugin(), "ArmorSwapEnabled"), PersistentDataType.INTEGER, 0);
           }else {
-            configData.getMessage(ConfigDataType.ENABLE);
+            player.sendMessage(ConfigDataType.ENABLE.getString());
             data.set(new NamespacedKey(ArmorSwap.getPlugin(), "ArmorSwapEnabled"), PersistentDataType.INTEGER, 1);
           }
         }
@@ -92,7 +94,7 @@ public class CommandManager extends BaseCommand {
         }
       }
     } else {
-      plugin.getLogger().info(configData.getMessage(ConfigDataType.PREFIX) + "" + ChatColor.RED + " Must be an player to run this command.");
+      plugin.getLogger().info(ConfigDataType.PREFIX.getString() + "" + ChatColor.RED + " Must be an player to run this command.");
     }
   }
 }

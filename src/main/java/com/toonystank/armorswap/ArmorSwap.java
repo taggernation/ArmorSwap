@@ -37,7 +37,6 @@ public final class ArmorSwap extends JavaPlugin {
     public void onEnable() {
         try {
             configData = new ConfigData(this);
-            Bukkit.getLogger().info(this.getDescription().getVersion());
             configData.updateConfig(this.getDescription().getVersion(), ConfigDataType.VERSION.getName());
         } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
