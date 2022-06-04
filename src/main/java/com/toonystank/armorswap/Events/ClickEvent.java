@@ -11,6 +11,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -53,6 +54,7 @@ public class ClickEvent implements Listener {
             if (value != 1) return;
 
             Entity entity = event.getRightClicked();
+
 
             if (!entity.getType().equals(EntityType.ARMOR_STAND)) return;
 
@@ -119,7 +121,6 @@ public class ClickEvent implements Listener {
             stand.getEquipment().setItemInMainHand(itemStack);
         }
     }
-
     //
     // ARMOR STAND EVENT ENDS HERE
     //
@@ -187,6 +188,7 @@ public class ClickEvent implements Listener {
     public void onArmorRightClickEvent(PlayerInteractEvent event) {
         if (mainHandSwap) {
             Player player = event.getPlayer();
+            if (player.getInventory().getItemInMainHand().getType().isAir()) return;
             int value = getArmorSwapEnabled(player);
             if (value == 1) {
                 Block block = event.getClickedBlock();
