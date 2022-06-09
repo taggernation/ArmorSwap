@@ -11,7 +11,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -50,65 +50,64 @@ public class ClickEvent implements Listener {
             Player player = event.getPlayer();
             if (!player.hasPermission(ConfigDataType.ARMOR_STAND_SWAP_PERMISSION.getString())) return;
             int value = getArmorSwapEnabled(player);
+            player.sendMessage(player.isSneaking() + " Sneaking");
             if (!player.isSneaking()) return;
             if (value != 1) return;
 
             Entity entity = event.getRightClicked();
 
+            if (entity instanceof ArmorStand stand) {
+                event.setCancelled(true);
+                if (stand.getEquipment() == null) return;
+                if (!stand.isVisible()) return;
 
-            if (!entity.getType().equals(EntityType.ARMOR_STAND)) return;
-
-            event.setCancelled(true);
-            ArmorStand stand = (ArmorStand) entity;
-            if (stand.getEquipment() == null) return;
-            if (!stand.isVisible()) return;
-
-            ItemStack[] standArmorList = stand.getEquipment().getArmorContents();
-            ItemStack[] playerArmorList = player.getInventory().getArmorContents();
-            for (ItemStack itemStack : playerArmorList) {
-                String itemName;
-                if (canMove(itemStack, player)) {
-                    if (itemStack == null || itemStack.getType().equals(Material.AIR)) {
-                        itemName = null;
-                    } else {
-                        itemName = itemStack.getType().toString().toUpperCase(Locale.ROOT);
-                    }
-                    if (itemName == null || itemName.contains(EquipmentDataType.PLAYER_BOOTS.getName())) {
-                        stand.getEquipment().setBoots(itemStack);
-                    }
-                    if (itemName == null || itemName.contains(EquipmentDataType.PLAYER_LEGGINGS.getName())) {
-                        stand.getEquipment().setLeggings(itemStack);
-                    }
-                    if (itemName == null || itemName.contains(EquipmentDataType.PLAYER_CHEST_PLATE.getName())) {
-                        stand.getEquipment().setChestplate(itemStack);
-                    }
-                    if (itemName == null || itemName.contains(EquipmentDataType.PLAYER_HELMET.getName())) {
-                        stand.getEquipment().setHelmet(itemStack);
+                ItemStack[] standArmorList = stand.getEquipment().getArmorContents();
+                ItemStack[] playerArmorList = player.getInventory().getArmorContents();
+                for (ItemStack itemStack : playerArmorList) {
+                    String itemName;
+                    if (canMove(itemStack, player)) {
+                        if (itemStack == null || itemStack.getType().equals(Material.AIR)) {
+                            itemName = null;
+                        } else {
+                            itemName = itemStack.getType().toString().toUpperCase(Locale.ROOT);
+                        }
+                        if (itemName == null || itemName.contains(EquipmentDataType.PLAYER_BOOTS.getName())) {
+                            stand.getEquipment().setBoots(itemStack);
+                        }
+                        if (itemName == null || itemName.contains(EquipmentDataType.PLAYER_LEGGINGS.getName())) {
+                            stand.getEquipment().setLeggings(itemStack);
+                        }
+                        if (itemName == null || itemName.contains(EquipmentDataType.PLAYER_CHEST_PLATE.getName())) {
+                            stand.getEquipment().setChestplate(itemStack);
+                        }
+                        if (itemName == null || itemName.contains(EquipmentDataType.PLAYER_HELMET.getName())) {
+                            stand.getEquipment().setHelmet(itemStack);
+                        }
                     }
                 }
-            }
-            for (ItemStack itemStack : standArmorList) {
-                String itemName;
-                if (canMove(itemStack, player)) {
-                    if (itemStack == null || itemStack.getType().equals(Material.AIR)) {
-                        itemName = null;
-                    } else itemName = itemStack.getType().toString().toUpperCase(Locale.ROOT);
-                    if (itemName == null || itemName.contains(EquipmentDataType.STAND_BOOTS.getName())) {
-                        player.getInventory().setBoots(itemStack);
-                    }
-                    if (itemName == null || itemName.contains(EquipmentDataType.STAND_LEGGINGS.getName())) {
-                        player.getInventory().setLeggings(itemStack);
-                    }
-                    if (itemName == null || itemName.contains(EquipmentDataType.STAND_CHEST_PLATE.getName())) {
-                        player.getInventory().setChestplate(itemStack);
-                    }
-                    if (itemName == null || itemName.contains(EquipmentDataType.STAND_HELMET.getName())) {
-                        player.getInventory().setHelmet(itemStack);
+                for (ItemStack itemStack : standArmorList) {
+                    String itemName;
+                    if (canMove(itemStack, player)) {
+                        if (itemStack == null || itemStack.getType().equals(Material.AIR)) {
+                            itemName = null;
+                        } else itemName = itemStack.getType().toString().toUpperCase(Locale.ROOT);
+                        if (itemName == null || itemName.contains(EquipmentDataType.STAND_BOOTS.getName())) {
+                            player.getInventory().setBoots(itemStack);
+                        }
+                        if (itemName == null || itemName.contains(EquipmentDataType.STAND_LEGGINGS.getName())) {
+                            player.getInventory().setLeggings(itemStack);
+                        }
+                        if (itemName == null || itemName.contains(EquipmentDataType.STAND_CHEST_PLATE.getName())) {
+                            player.getInventory().setChestplate(itemStack);
+                        }
+                        if (itemName == null || itemName.contains(EquipmentDataType.STAND_HELMET.getName())) {
+                            player.getInventory().setHelmet(itemStack);
+                        }
                     }
                 }
+                standWithHand(player, stand);
+                player.playSound(player.getLocation(), Sound.valueOf(sound), 1.0F, 1.0F);
             }
-            standWithHand(player, stand);
-            player.playSound(player.getLocation(), Sound.valueOf(sound), 1.0F, 1.0F);
         }
     }
     @SuppressWarnings("ConstantConditions")
@@ -184,49 +183,60 @@ public class ClickEvent implements Listener {
     //
     // RIGHT CLICK ON ARMOR EVENT START HERE
     //
+    Boolean success = true;
     @EventHandler
     public void onArmorRightClickEvent(PlayerInteractEvent event) {
+        if (!event.getAction().equals(Action.RIGHT_CLICK_AIR) || !event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) return;
         if (mainHandSwap) {
+            success = false;
             Player player = event.getPlayer();
             if (player.getInventory().getItemInMainHand().getType().isAir()) return;
             int value = getArmorSwapEnabled(player);
             if (value == 1) {
                 Block block = event.getClickedBlock();
                 if (block != null) {
-                    if (!block.getType().isInteractable()) return;
+                    player.sendMessage(block.getType().toString());
+                    if (block.getType().isInteractable()) return;
                 }
-                ItemStack Item = player.getInventory().getItemInMainHand();
-                playerItem(player, Item, sound);
+                ItemStack item = player.getInventory().getItemInMainHand();
+                String itemName = item.getType().toString().toUpperCase(Locale.ROOT);
+                if (itemName.contains(EquipmentDataType.PLAYER_HELMET.getName())) {
+                    if (player.getInventory().getHelmet() == null) return;
+                    ItemStack returnItem = player.getInventory().getHelmet();
+                    if (!canMove(returnItem, player)) return;
+                    player.getInventory().setItemInMainHand(returnItem);
+                    player.getInventory().setHelmet(item);
+                    success = true;
+                }
+                else if (itemName.contains(EquipmentDataType.PLAYER_CHEST_PLATE.getName()) || itemName.contains(EquipmentDataType.PLAYER_ELYTRA.getName())) {
+                    if (player.getInventory().getChestplate() == null) return;
+                    ItemStack returnItem = player.getInventory().getChestplate();
+                    if (!canMove(returnItem, player)) return;
+                    player.getInventory().setItemInMainHand(returnItem);
+                    player.getInventory().setChestplate(item);
+                    success = true;
+                }
+                else if (itemName.contains(EquipmentDataType.PLAYER_BOOTS.getName())) {
+                    if (player.getInventory().getBoots() == null) return;
+                    ItemStack returnItem = player.getInventory().getBoots();
+                    if (!canMove(returnItem, player)) return;
+                    player.getInventory().setItemInMainHand(returnItem);
+                    player.getInventory().setBoots(item);
+                    success = true;
+                }
+                else if (itemName.contains(EquipmentDataType.PLAYER_LEGGINGS.getName())) {
+                    if (player.getInventory().getLeggings() == null) return;
+                    ItemStack returnItem = player.getInventory().getBoots();
+                    if (!canMove(returnItem, player)) return;
+                    player.getInventory().setItemInMainHand(returnItem);
+                    player.getInventory().setLeggings(item);
+                    success = true;
+                }
+                if (success) {
+                    player.playSound(player.getLocation(), Sound.valueOf(sound), 1.0F, 1.0F);
+                }
             }
         }
-    }
-    public void playerItem(Player player, ItemStack item, String sound){
-        String itemName = item.getType().toString().toUpperCase(Locale.ROOT);
-        if (itemName.contains(EquipmentDataType.PLAYER_HELMET.getName())) {
-            ItemStack returnItem = player.getInventory().getHelmet();
-            if (!canMove(returnItem, player)) return;
-            player.getInventory().setItemInMainHand(returnItem);
-            player.getInventory().setHelmet(item);
-        }
-        else if (itemName.contains(EquipmentDataType.PLAYER_CHEST_PLATE.getName()) || itemName.contains(EquipmentDataType.PLAYER_ELYTRA.getName())) {
-            ItemStack returnItem = player.getInventory().getChestplate();
-            if (!canMove(returnItem, player)) return;
-            player.getInventory().setItemInMainHand(returnItem);
-            player.getInventory().setChestplate(item);
-        }
-        else if (itemName.contains(EquipmentDataType.PLAYER_BOOTS.getName())) {
-            ItemStack returnItem = player.getInventory().getBoots();
-            if (!canMove(returnItem, player)) return;
-            player.getInventory().setItemInMainHand(returnItem);
-            player.getInventory().setBoots(item);
-        }
-        else if (itemName.contains(EquipmentDataType.PLAYER_LEGGINGS.getName())) {
-            ItemStack returnItem = player.getInventory().getLeggings();
-            if (!canMove(returnItem, player)) return;
-            player.getInventory().setItemInMainHand(returnItem);
-            player.getInventory().setLeggings(item);
-        }
-        player.playSound(player.getLocation(), Sound.valueOf(sound), 1.0F, 1.0F);
     }
         //
         // RIGHT CLICK ON ARMOR EVENT ENDS HERE
