@@ -22,6 +22,7 @@ public final class ArmorSwap extends JavaPlugin {
     public static ArmorSwap getPlugin() {
         return plugin;
     }
+    String configVersion = "1.5.9";
 
     private static ArmorSwap plugin;
     private ConfigData configData;
@@ -37,7 +38,7 @@ public final class ArmorSwap extends JavaPlugin {
     public void onEnable() {
         try {
             configData = new ConfigData(this);
-            configData.updateConfig(this.getDescription().getVersion(), ConfigDataType.VERSION.getName());
+            configData.updateConfig(configVersion, ConfigDataType.VERSION.getName());
         } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }
