@@ -50,7 +50,6 @@ public class ClickEvent implements Listener {
             Player player = event.getPlayer();
             if (!player.hasPermission(ConfigDataType.ARMOR_STAND_SWAP_PERMISSION.getString())) return;
             int value = getArmorSwapEnabled(player);
-            player.sendMessage(player.isSneaking() + " Sneaking");
             if (!player.isSneaking()) return;
             if (value != 1) return;
 
