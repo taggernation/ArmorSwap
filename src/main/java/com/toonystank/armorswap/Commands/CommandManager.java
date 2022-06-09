@@ -22,8 +22,8 @@ import java.util.Objects;
 @CommandAlias("Armorswap|armorswap|as")
 public class CommandManager extends BaseCommand {
   private final String sound = Objects.requireNonNull(ArmorSwap.getPlugin().getConfig().getString("Sound"));
-  private ConfigData configData;
-  private Plugin plugin;
+  private final ConfigData configData;
+  private final Plugin plugin;
 
   public CommandManager(ConfigData configData, Plugin plugin) {
     this.configData = configData;
