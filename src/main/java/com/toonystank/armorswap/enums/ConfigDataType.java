@@ -3,6 +3,7 @@ package com.toonystank.armorswap.enums;
 import com.toonystank.armorswap.ArmorSwap;
 
 public enum ConfigDataType {
+
     ARMOR_STAND_SWAP("Armor_stand_swap", true),
     ARMOR_STAND_SWAP_PERMISSION("Armor_Stand_Swap_Permission"),
     ITEM_FRAME_SWAP("Item_frame_swap", true),
@@ -34,7 +35,7 @@ public enum ConfigDataType {
     public String getString() {
         return ArmorSwap.getPlugin().getConfigData().getMessage(name);
     }
-    public Boolean getBoolean() {
+    public boolean getBoolean() {
         if (value = true) {
             return ArmorSwap.getPlugin().getConfigData().getBoolean(name);
         }

@@ -5,7 +5,6 @@ import co.aikar.commands.annotation.*;
 import com.toonystank.armorswap.ArmorSwap;
 import com.toonystank.armorswap.enums.ConfigDataType;
 import com.toonystank.armorswap.utils.ConfigData;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
@@ -22,13 +21,13 @@ import java.util.Objects;
 
 @CommandAlias("Armorswap|armorswap|as")
 public class CommandManager extends BaseCommand {
-  String sound = Objects.requireNonNull(ArmorSwap.getPlugin().getConfig().getString("Sound"));
-
-  ConfigData configData;
-  Plugin plugin;
+  private final String sound = Objects.requireNonNull(ArmorSwap.getPlugin().getConfig().getString("Sound"));
+  private ConfigData configData;
+  private Plugin plugin;
 
   public CommandManager(ConfigData configData, Plugin plugin) {
     this.configData = configData;
+    this.plugin = plugin;
   }
 
   @Subcommand("reload")
@@ -39,7 +38,7 @@ public class CommandManager extends BaseCommand {
       configData.reload();
       player.sendMessage(ConfigDataType.PREFIX.getString() + "" + ChatColor.AQUA + " ArmorSwap is reloaded");
     } else {
-      ArmorSwap.getPlugin().reloadConfig();
+      plugin.reloadConfig();
       plugin.getLogger().info(ConfigDataType.PREFIX.getString() + "" + ChatColor.AQUA + " ArmorSwap is reloaded");
     }
   }
@@ -50,8 +49,8 @@ public class CommandManager extends BaseCommand {
   public void onHead(CommandSender sender) {
     if (sender instanceof Player player) {
       ItemStack itemForHead = player.getInventory().getItemInMainHand();
-      ItemStack itemForHand = Objects.requireNonNull(player.getEquipment()).getHelmet();
-      player.getEquipment().setHelmet(itemForHead);
+      ItemStack itemForHand = player.getInventory().getHelmet();
+      player.getInventory().setHelmet(itemForHead);
       player.getInventory().setItemInMainHand(itemForHand);
       player.playSound(player.getLocation(), Sound.valueOf(sound), 1.0F, 1.0F);
     } else {

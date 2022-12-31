@@ -4,13 +4,11 @@ import co.aikar.commands.BukkitCommandManager;
 import co.aikar.commands.PaperCommandManager;
 import com.toonystank.armorswap.Commands.CommandManager;
 import com.toonystank.armorswap.Events.ClickEvent;
-import com.toonystank.armorswap.Events.OnJoin;
+import com.toonystank.armorswap.Events.PlayerJoin;
 import com.toonystank.armorswap.enums.ConfigDataType;
 import com.toonystank.armorswap.utils.ConfigData;
-import com.toonystank.armorswap.utils.ConfigManager;
 import com.toonystank.armorswap.utils.Metrics;
 import com.toonystank.armorswap.utils.UpdateChecker;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -22,7 +20,12 @@ public final class ArmorSwap extends JavaPlugin {
     public static ArmorSwap getPlugin() {
         return plugin;
     }
-    String configVersion = "1.5.9";
+
+    public String getConfigVersion() {
+        return configVersion;
+    }
+
+    private final String configVersion = "1.5.9";
 
     private static ArmorSwap plugin;
     private ConfigData configData;
@@ -50,11 +53,11 @@ public final class ArmorSwap extends JavaPlugin {
             }
         });
         //bStats metrics
-        Metrics metrics = new Metrics(this, 14140); //https://bstats.org/what-is-my-plugin-id
+        var metrics = new Metrics(this, 14140); //https://bstats.org/what-is-my-plugin-id
         
         setPlugin(this);
         // Events
-        getServer().getPluginManager().registerEvents(new OnJoin(), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
         try {
             getServer().getPluginManager().registerEvents(new ClickEvent(configData,this), this);
         } catch (IOException e) {
