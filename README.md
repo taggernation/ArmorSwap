@@ -1,8 +1,8 @@
-<h1 align="center"><img height="35" src="https://github.com/taggernation/ArmorSwap/releases">ArmorSwap</h1>
+<h1 align="center"><img height="35" src="https://i.pinimg.com/originals/e6/19/26/e619260a9a2aa8dfa91654e9906ba0b1.gif">ArmorSwap</h1>
 <div align="center">
   
-![Spiget Downloads](https://github.com/taggernation/ArmorSwap/releases%20Downloads&style=for-the-badge)
-![GitHub all releases](https://github.com/taggernation/ArmorSwap/releases%20Downloads&style=for-the-badge)
+![Spiget Downloads](https://img.shields.io/spiget/downloads/97332?color=ffd000&label=Spigot%20Downloads&style=for-the-badge)
+![GitHub all releases](https://img.shields.io/github/downloads/taggernation/ArmorSwap/total?color=f0f6fc&label=GitHub%20Downloads&style=for-the-badge)
 
 </div>
 
@@ -27,8 +27,8 @@ A lightweight plugin! that adds the functionality to switch armor with you, armo
 
 `/Armor head` Swap item in hand to head
 
-- Permission: https://github.com/taggernation/ArmorSwap/releases
+- Permission: Armorswap.command.head
 
 `/Armor reload` Reload plugin config
 
-- Permission: https://github.com/taggernation/ArmorSwap/releases
+- Permission: Armorswap.command.reload
